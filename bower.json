@@ -1,0 +1,12 @@
+{
+  "name": "blog",
+  "version": "0.0.0",
+  "authors": [
+    "Nathan Houle <nathan@nathanhoule.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "foundation": "~5.3.3"
+  }
+}

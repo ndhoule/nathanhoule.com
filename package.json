@@ -1,0 +1,31 @@
+{
+  "name": "nathanhoule.com",
+  "version": "0.0.0",
+  "description": "Nathan Houle's personal website, found at nathanhoule.com.",
+  "main": "index.js",
+  "scripts": {
+    "build": "make build",
+    "clean": "make clean",
+    "start": "node index"
+  },
+  "author": "Nathan Houle <nathan@nathanhoule.com>",
+  "license": "MIT",
+  "repository": "https://github.com/ndhoule/nathanhoule.com.git",
+  "devDependencies": {
+    "handlebars": "^2.0.0-alpha.4",
+    "metalsmith": "^0.9.0",
+    "metalsmith-collections": "^0.5.1",
+    "metalsmith-drafts": "0.0.1",
+    "metalsmith-filemetadata": "0.0.1",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-permalinks": "^0.3.2",
+    "metalsmith-sass": "^0.3.0",
+    "metalsmith-templates": "^0.5.2",
+    "moment": "^2.8.1"
+  },
+  "dependencies": {
+    "express": "^4.8.3",
+    "metalsmith-metadata": "0.0.1",
+    "serve-static": "^1.5.1"
+  }
+}

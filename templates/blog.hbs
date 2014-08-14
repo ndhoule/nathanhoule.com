@@ -1,0 +1,28 @@
+{{> top }}
+{{> blog-header }}
+
+<div class="row">
+  <div class="large-12 columns">
+    <h2>Blog Entries</h2>
+  </div>
+
+  <div class="large-12 columns">
+    <div class="posts">
+      {{#if collections.blogEntries}}
+      <ul>
+        {{#each collections.blogEntries}}
+        {{#unless this.draft}}
+        <li>
+          <strong><a href="/{{ this.path }}">{{ this.title }}</a></strong>&nbsp;&nbsp;&nbsp; Published <time datetime="{{ date.formatUtcTime date }}">{{ date.format this.date }}</time>
+        </li>
+        {{/unless}}
+        {{/each}}
+      </ul>
+      {{else}}
+        <p>No blog entries.</p>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{> bottom }}
