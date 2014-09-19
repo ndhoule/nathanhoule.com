@@ -40,8 +40,10 @@ metalsmith(__dirname)
     }
   ]))
   .use(markdown({
+    breaks: true,
     gfm: true,
-    smartypants: true
+    smartypants: true,
+    tables: true
   }))
   .use(permalinks({
     pattern: ':category/:title'
