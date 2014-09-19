@@ -1,20 +1,26 @@
 ---
 title: Git Rebase Workflow
-date: 2014-03-14
+date: 2014-09-18
 ---
 
-This isn't an in-depth analysis of the benefits of a squash/rebase workflow. There are plenty of those around.<sup>[1](#1)</sup> Instead, this is a summary of what you need to know to use a squash/rebase workflow, some common pitfalls, and insight into what each each command I ask you to type is actually doing.
+This isn't an in-depth analysis of the benefits of a squash/rebase workflow. I prefer the `rebase` workflow over the `merge` workflow because it tends to result in a very clean, easy-to-read Git history. Some people prefer a merge workflow. Either is a totally valid approach, and there are plenty of excellent comparisons out there.<sup>[1](#1)</sup>
+
+Instead, this post is a summary of what you need to know to use a squash/rebase workflow, some common pitfalls, and insight into what each each command is actually doing.
 
 
 ### Pulling in Upstream Changes
 
+First, you'll want to make sure that your repository has two remotes; one named `origin`, and one named `upstream`. The `upstream` remote should point at the canonical repository (not your fork).
+
+Next, make sure your code is up to date with the canonical repository by fetching from upstream and rebasing it into your current branch:
+
 ```sh
+git checkout master
 git fetch upstream
-git checkout your-feature-branch
 git rebase upstream/master
 ```
 
-Alternatively, you can give `git pull` the `--rebase` flag to merge in upstream changes:
+Resolve conflicts (if any) and your code should now be up to date. Alternatively, you can pass `git pull` the `--rebase` flag to merge in upstream changes:
 
 ```sh
 git pull --rebase upstream master
@@ -64,7 +70,7 @@ pick 8690cd0 Add changelog
 We want to change our oldest commit's message to a summary of our pull request, and then squash all the other commits onto that commit:
 
 ```git
-reword 40d4ec1 Add contributing docs
+pick 40d4ec1 Add contributing docs
 squash b4514ff Update readme with installation instructions
 squash 8690cd0 Add changelog
 
@@ -89,42 +95,12 @@ squash 8690cd0 Add changelog
 
 Here, Git sees our commits marked `squash` and combines them all into `40d4ec1`.
 
-Now we get the opportunity to edit our commit message. This commit will contain all the changes you've made on this branch. You should now see the commit you chose to reword:
-
-```git
-Add contributing docs
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-# rebase in progress; onto dc82960
-# You are currently editing a commit while rebasing branch 'master' on 'dc82960'.
-#
-# Changes to be committed:
-# new file:   CONTRIBUTING.md
-#
-```
-
-Change the commit message to a summary of all changes made on this branch and save:
-
-```git
-Add changelog, contributing and quickstart docs
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-# rebase in progress; onto dc82960
-# You are currently editing a commit while rebasing branch 'master' on 'dc82960'.
-#
-# Changes to be committed:
-# new file:   CONTRIBUTING.md
-#
-```
-
-Great! Now you'll get an opportunity to edit the final, squashed commit message. Because I decided to edit it above, I just save here:
+Now we get the opportunity to edit our commit message.
 
 ```git
 # This is a combination of 3 commits.
 # The first commit's message is:
-Add changelog, contributing and quickstart docs
+Add contributing docs
 
 # This is the 2nd commit message:
 
@@ -146,9 +122,9 @@ Add changelog
 #
 ```
 
-You've now squashed your feature branch down into one commit. You can now push your branch up and put in a pull request, and your changes will be contained within a single commit.
+You've now squashed your feature branch down into one single commit composed of the changes in all three commits. You can now push your branch up and put in a pull request, and your changes will be contained within a single commit.
 
-Note that if you've already pushed this branch, you'll need to force push with `git push -f`—rebasing rewrites your commit history, and so you'll need to tell your Git server it's okay to accept these changes.
+Note that if you've already pushed this branch, you'll need to force push with `git push -f`. Rebasing rewrites your commit history, meaning your local Git history will have diverged from your remote history; as such, you'll need to tell your Git server it's okay to accept these changes.
 
 #### Summary<a id="squash-tldr"></a>
 
@@ -163,9 +139,9 @@ git rebase -i upstream/master
 
 #####[Skip to the tl;dr](#revert-rebase-tldr)
 
-The flipside to squashing your commits down into a 
+The flipside to rebasing down to a single commit is that if you mess things up, undoing them can sometimes be a little difficult.
 
-Sometimes, in the middle of a rebase you'll realize that you edited the wrong commits, hit save before you finished typing out your commit message, or messed up some merge conflicts during your rebase. Luckily, reverting a rebase is fairly painless, thanks to Git's [`reflog`][reflog] command.
+Sometimes, in the middle of a rebase you'll realize that you edited the wrong commits, hit save before you finished typing out your commit message, or messed up some merge conflicts during your rebase. Luckily, reverting a rebase is pretty easy, thanks to Git's [`reflog`][reflog] command.
 
 First, we'll run `git reflog` to get a full list of changes made to our repository:
 
@@ -218,18 +194,10 @@ git reset --hard 'sha_or_HEAD@{number}'
 
 -----
 
-<!-- Footnotes -->
-<sub><sup><a id="1">1</a></sup>: For a great comparison of merge vs. rebase workflows, including the pros and cons of each, check out [this blog post from Atlassian][Atlassian: merge vs. rebase].</sub>
-<!-- End footnotes -->
+<sub><sup><a id="1">1</a></sup>: For a great comparison of merge vs. rebase workflows, including the pros and cons of each, check out [this blog post from Atlassian][Atlassian - merge vs. rebase].</sub>
+
 
 <!-- Links -->
-[Atlassian: merge vs. rebase]: https://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/
+[Atlassian - merge vs. rebase]: https://blogs.atlassian.com/2013/10/git-team-workflows-merge-or-rebase/
 [shell expansion]: http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
 [reflog]: http://gitready.com/intermediate/2009/02/09/reflog-your-safety-net.html
-<!-- End links -->
-
-<!-- Sources
-TODO: Break this into a proper section
-
-http://blog.steveklabnik.com/posts/2012-11-08-how-to-squash-commits-in-a-github-pull-request
-End sources -->
