@@ -13,7 +13,7 @@
         {{#each collections.blogEntries}}
         {{#unless this.draft}}
         <li>
-          <strong><a href="/{{ this.path }}">{{ this.title }}</a></strong>&nbsp;&nbsp;&nbsp; Published <time datetime="{{ date.formatUtcTime date }}">{{ date.format this.date }}</time>
+          <strong><a href="/{{ this.path }}">{{ this.title }}</a></strong>&nbsp;&nbsp;&nbsp; Published <time datetime="{{ formatUTCDate date }}">{{ formatDate this.date }}</time>
         </li>
         {{/unless}}
         {{/each}}

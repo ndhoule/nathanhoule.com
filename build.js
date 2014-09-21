@@ -17,11 +17,11 @@ Handlebars.registerHelper('debug', function() {
   console.log(this);
 });
 
-Handlebars.registerHelper('date.format', function(date) {
+Handlebars.registerHelper('formatDate', function(date) {
   return moment(date).format('MMMM Do, YYYY');
 });
 
-Handlebars.registerHelper('date.formatUtcTime', function(date) {
+Handlebars.registerHelper('formatUTCDate', function(date) {
   return moment.utc(date).format('YYYY-MM-DD HH:mmZ');
 });
 
