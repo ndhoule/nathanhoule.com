@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "express": "^4.8.3",
+    "metalsmith-asciidoc": "^1.0.0",
     "metalsmith-metadata": "0.0.1",
     "serve-static": "^1.5.1"
   }

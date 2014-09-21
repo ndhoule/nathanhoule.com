@@ -1,6 +1,7 @@
 'use strict';
 
 var metalsmith = require('metalsmith');
+var asciidoc = require('metalsmith-asciidoc');
 var collections = require('metalsmith-collections');
 var drafts = require('metalsmith-drafts');
 var fileMetadata = require('metalsmith-filemetadata');
@@ -27,7 +28,7 @@ Handlebars.registerHelper('date.formatUtcTime', function(date) {
 metalsmith(__dirname)
   .use(collections({
     blogEntries: {
-      pattern: 'content/blog/*.md',
+      pattern: 'content/blog/*.{md,txt,asciidoc}',
       sortBy: 'date',
       reverse: true
     }
@@ -35,7 +36,7 @@ metalsmith(__dirname)
   .use(drafts())
   .use(fileMetadata([
     {
-      pattern: 'content/blog/*.md',
+      pattern: 'content/blog/*.{md,txt,asciidoc}',
       metadata: { category: 'blog', template: 'blog-entry.hbs' }
     }
   ]))
@@ -45,6 +46,7 @@ metalsmith(__dirname)
     smartypants: true,
     tables: true
   }))
+  .use(asciidoc())
   .use(permalinks({
     pattern: ':category/:title'
   }))
