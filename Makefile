@@ -1,13 +1,11 @@
-build: node_modules bower_components
-	@node build
-
-node_modules: package.json
-	@npm install
+clean:
+	rm -rf build/*
 
 bower_components: bower.json
 	@bower install
 
-clean:
-	rm -rf build/*
+build: bower_components
+	@node build
 
+.DEFAULT_GOAL = build
 .PHONY: build clean
