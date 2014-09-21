@@ -1,11 +1,14 @@
+NODE=$(shell which node)
+BOWER=./node_modules/.bin/bower
+
 clean:
 	rm -rf build/*
 
 bower_components: bower.json
-	@bower install
+	@$(BOWER) install
 
 build: bower_components
-	@node build
+	@$(NODE) build
 
 .DEFAULT_GOAL = build
 .PHONY: build clean
