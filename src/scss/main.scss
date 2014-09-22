@@ -15,12 +15,6 @@ pre {
   max-width: rem-calc(700);
 }
 
-.navbar {
-  font-family: $body-font-family;
-  margin-top: rem-calc(8);
-  margin-bottom: rem-calc(8);
-}
-
 .site-title-area {
   @extend .text-center;
   margin-top: rem-calc(100);
