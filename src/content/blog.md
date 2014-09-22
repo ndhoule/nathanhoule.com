@@ -1,5 +1,5 @@
 ---
+index: true
 category: blog
-title: ''
 template: blog.hbs
 ---

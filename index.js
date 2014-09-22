@@ -25,7 +25,40 @@ Handlebars.registerHelper('formatUTCDate', function(date) {
   return moment.utc(date).format('YYYY-MM-DD HH:mmZ');
 });
 
+// Allows specification of an index page for a category.
+var indexes = function(config) {
+  var path = require('path');
+
+  return function(files, metalsmith, done) {
+    setImmediate(done);
+
+    Object.keys(files).forEach(function(filename) {
+      var data = files[filename];
+
+      if (!data.index) {
+        return;
+      }
+
+      if (data.category === undefined) {
+        throw new Error([
+          'Index page',
+          filename,
+          'does not have a `category` specified. Please specify a `category` for this page.'
+        ].join(' '));
+      }
+
+      data.permalink = false;
+
+      var name = path.join(data.category, 'index' + path.extname(filename));
+
+      delete files[filename];
+      files[name] = data;
+    });
+  };
+};
+
 metalsmith(__dirname)
+  .use(indexes())
   .use(collections({
     blogEntries: {
       pattern: 'content/blog/*.{md,markdown,adoc,asciidoc}',
@@ -48,7 +81,7 @@ metalsmith(__dirname)
   }))
   .use(asciidoc())
   .use(permalinks({
-    pattern: ':category/:title'
+    pattern: ':category/:date/:title'
   }))
   .use(sass({
     includePaths: [
