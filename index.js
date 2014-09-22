@@ -28,7 +28,7 @@ Handlebars.registerHelper('formatUTCDate', function(date) {
 metalsmith(__dirname)
   .use(collections({
     blogEntries: {
-      pattern: 'content/blog/*.{md,txt,asciidoc}',
+      pattern: 'content/blog/*.{md,markdown,adoc,asciidoc}',
       sortBy: 'date',
       reverse: true
     }
@@ -36,7 +36,7 @@ metalsmith(__dirname)
   .use(drafts())
   .use(fileMetadata([
     {
-      pattern: 'content/blog/*.{md,txt,asciidoc}',
+      pattern: 'content/blog/*.{md,markdown,adoc,asciidoc}',
       metadata: { category: 'blog', template: 'blog-entry.hbs' }
     }
   ]))
