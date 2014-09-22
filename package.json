@@ -4,10 +4,6 @@
   "description": "Nathan Houle's personal website, found at nathanhoule.com.",
   "private": true,
   "main": "index.js",
-  "scripts": {
-    "build": "make build",
-    "clean": "make clean"
-  },
   "author": "Nathan Houle <nathan@nathanhoule.com>",
   "license": "MIT",
   "repository": {

@@ -70,6 +70,7 @@ metalsmith(__dirname)
       top: 'partials/top'
     }
   }))
+  .destination('public')
   .build(function(err) {
     if (err) {
       throw err;

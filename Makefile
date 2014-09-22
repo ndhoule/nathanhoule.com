@@ -8,7 +8,7 @@ bower_components: bower.json
 	@$(BOWER) install
 
 build: bower_components
-	@$(NODE) build
+	@$(NODE) .
 
 .DEFAULT_GOAL = build
 .PHONY: build clean
