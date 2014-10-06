@@ -87,7 +87,7 @@ metalsmith(__dirname)
     includePaths: [
       'bower_components/foundation/scss'
     ],
-    outputDir: 'css/',
+    outputDir: 'assets/css/',
     outputStyle: 'compressed'
   }))
   .use(templates({
