@@ -1,28 +1,52 @@
 {
   "name": "nathanhoule.com",
-  "version": "0.0.0",
-  "description": "Nathan Houle's personal website, found at nathanhoule.com.",
   "private": true,
-  "main": "index.js",
+  "description": "Nathan Houle's personal website, found at nathanhoule.com.",
+  "version": "0.0.0",
   "author": "Nathan Houle <nathan@nathanhoule.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/ndhoule/nathanhoule.com.git"
   },
+  "engines": {
+    "node": ">= 14.0.0"
+  },
+  "dependencies": {
+    "@emotion/eslint-plugin": "^11.0.0",
+    "@emotion/react": "^11.1.2",
+    "@openfonts/inter_all": "^1.0.2",
+    "@openfonts/source-sans-pro_latin": "^1.44.2",
+    "gatsby": "^2.24.85",
+    "gatsby-plugin-emotion": "^5.1.0",
+    "gatsby-plugin-react-helmet": "^3.3.14",
+    "gatsby-plugin-typescript": "^2.4.24",
+    "graphql": "^15.3.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0"
+  },
   "devDependencies": {
-    "bower": "^1.3.11",
-    "handlebars": "^2.0.0-alpha.4",
-    "metalsmith": "^0.9.0",
-    "metalsmith-asciidoc": "^1.1.0",
-    "metalsmith-collections": "^0.5.1",
-    "metalsmith-drafts": "0.0.1",
-    "metalsmith-filemetadata": "0.0.1",
-    "metalsmith-markdown": "^0.2.1",
-    "metalsmith-metadata": "0.0.1",
-    "metalsmith-permalinks": "^0.4.0",
-    "metalsmith-sass": "^0.3.0",
-    "metalsmith-templates": "^0.5.2",
-    "moment": "^2.8.1"
+    "@graphql-codegen/cli": "1.17.8",
+    "@graphql-codegen/typescript": "1.17.8",
+    "@graphql-codegen/typescript-operations": "1.17.8",
+    "@ndhoule/eslint-config": "^3.4.1",
+    "@types/node": "^14.14.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-helmet": "^6.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-plugin-node": "^11.1.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-prettier": "^1.1.2",
+    "typescript": "^4.0.3"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "~4.2.0"
   }
 }
