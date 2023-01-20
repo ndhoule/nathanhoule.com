@@ -1,90 +1,43 @@
-import { css } from "@emotion/react";
-import { Link } from "gatsby";
-import * as React from "react";
-import { Grid, Row } from "../components/Grid";
-import Layout from "../components/Layout";
-import { Menu, MenuItem, SubMenu } from "../components/Menu";
-import SEO from "../components/SEO";
+import { Navigation } from "../components/Navigation";
+import { breakpoints } from "../styles/breakpoints";
+import { lightBlue } from "../styles/colors";
+import { hsl } from "../styles/utils";
+import React from "react";
 
-const Navbar: React.FunctionComponent = () => (
-  <nav>
-    <Menu>
-      <SubMenu>
-        <MenuItem>
-          <Link to="/">Home</Link>
-        </MenuItem>
-      </SubMenu>
-
-      <SubMenu position="right">
-        <MenuItem>
-          <a
-            href="http://www.linkedin.com/in/ndhoule"
-            rel="noreferrer"
-            target="_blank"
-          >
-            LinkedIn
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a href="https://github.com/ndhoule" rel="noreferrer" target="_blank">
-            GitHub
-          </a>
-        </MenuItem>
-        <MenuItem>
-          <a href="mailto:nathan@nathanhoule.com">Email</a>
-        </MenuItem>
-      </SubMenu>
-    </Menu>
-  </nav>
-);
-
-const TitleArea: React.FunctionComponent = ({ children }) => (
-  <h2
-    css={css`
-      padding-bottom: 2em;
-      padding-top: 2em;
-      text-align: center;
-    `}
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <div
+    css={{
+      borderTopColor: hsl(lightBlue),
+      borderTopStyle: "solid",
+      borderTopWidth: "4px",
+    }}
   >
-    {children}
-  </h2>
+    <div
+      css={{
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: breakpoints.md.px,
+      }}
+    >
+      {children}
+    </div>
+  </div>
 );
 
-const MainPage: React.FunctionComponent = () => (
+const Home = () => (
   <Layout>
-    <SEO description="I'm Nathan Houle, a San Francisco Bay Area-based software engineer." />
-    <div
-      css={(theme) => css`
-        border-top: 4px solid ${theme.colors.primary};
-      `}
-    >
-      <div
-        css={css`
-          margin: auto;
-          max-width: 700px;
-        `}
-      >
-        <Navbar />
+    <Navigation />
 
-        <section>
-          <Grid columns={4} alignment="center">
-            <Row>
-              <TitleArea>I{"'"}m Nathan Houle.</TitleArea>
-            </Row>
-            <Row>
-              <p
-                css={css`
-                  text-align: center;
-                `}
-              >
-                I{"'"}m a San Francisco Bay Area-based software engineer.
-              </p>
-            </Row>
-          </Grid>
-        </section>
-      </div>
-    </div>
+    <main>
+      <h1 css={{ textAlign: "center" }}>I&apos;m Nathan Houle.</h1>
+
+      <p css={{ textAlign: "center" }}>
+        I&apos;m a San Francisco Bay Area-based software engineer.
+      </p>
+    </main>
   </Layout>
 );
 
-export default MainPage;
+const HomePage = () => <Home />;
+
+export default HomePage;

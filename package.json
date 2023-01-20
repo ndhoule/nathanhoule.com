@@ -9,44 +9,53 @@
     "type": "git",
     "url": "https://github.com/ndhoule/nathanhoule.com.git"
   },
+  "packageManager": "yarn@3.3.1",
   "engines": {
-    "node": ">= 14.0.0"
+    "node": ">= 18.0.0"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --cache --fix .",
+    "start": "next start",
+    "typecheck": "tsc",
+    "typecheck:watch": "tsc --incremental --watch"
   },
   "dependencies": {
-    "@emotion/eslint-plugin": "^11.0.0",
-    "@emotion/react": "^11.1.2",
-    "@openfonts/inter_all": "^1.0.2",
-    "@openfonts/source-sans-pro_latin": "^1.44.2",
-    "gatsby": "^2.24.85",
-    "gatsby-plugin-emotion": "^5.1.0",
-    "gatsby-plugin-react-helmet": "^3.3.14",
-    "gatsby-plugin-typescript": "^2.4.24",
-    "graphql": "^15.3.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0"
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@next/font": "^13.1.4",
+    "next": "^13.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.17.8",
-    "@graphql-codegen/typescript": "1.17.8",
-    "@graphql-codegen/typescript-operations": "1.17.8",
-    "@ndhoule/eslint-config": "^3.4.1",
-    "@types/node": "^14.14.2",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-helmet": "^6.1.0",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^7.11.0",
-    "eslint-plugin-node": "^11.1.0",
-    "prettier": "^2.1.2",
-    "stylelint": "^13.7.2",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-prettier": "^1.1.2",
-    "typescript": "^4.0.3"
-  },
-  "resolutions": {
-    "eslint-plugin-react-hooks": "~4.2.0"
+    "@ndhoule/eslint-config": "8.0.0-1",
+    "@next/eslint-plugin-next": "^13.1.4",
+    "@tsconfig/next-strictest": "^1.0.0",
+    "@types/eslint": "^8",
+    "@types/node": "^18.11.10",
+    "@types/prettier": "^2",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "~5.48.1",
+    "@typescript-eslint/parser": "~5.48.1",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "~8.6.0",
+    "eslint-config-problems": "~7.0.1",
+    "eslint-plugin-eslint-comments": "~3.2.0",
+    "eslint-plugin-import": "~2.26.0",
+    "eslint-plugin-jest": "~27.2.1",
+    "eslint-plugin-jsx-a11y": "~6.7.0",
+    "eslint-plugin-lodash": "~7.4.0",
+    "eslint-plugin-node": "~11.1.0",
+    "eslint-plugin-prettier": "~4.2.1",
+    "eslint-plugin-react": "~7.32.0",
+    "eslint-plugin-react-hooks": "~4.6.0",
+    "eslint-plugin-testing-library": "~5.9.1",
+    "eslint-plugin-unicorn": "~45.0.2",
+    "prettier": "2.8.3",
+    "typescript": "^4.9.4"
   }
 }

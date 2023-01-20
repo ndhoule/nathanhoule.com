@@ -1,49 +1,60 @@
 module.exports = {
   root: true,
-  plugins: ["@emotion"],
-  extends: [
-    "@ndhoule/eslint-config/recommended",
-    "@ndhoule/eslint-config/lodash",
-    "@ndhoule/eslint-config/react",
-  ],
-  rules: {
-    // stylelint only works on template literals, so enforce template literal usage everywhere.
-    "@emotion/syntax-preference": ["error", "string"],
-    // No longer required as of React 17, 16.14.0
-    // https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-  },
+  extends: ["@ndhoule/eslint-config/recommended"],
   overrides: [
-    // Configuration files
-    {
-      files: [
-        "*.config.js",
-        ".*rc",
-        ".*rc.js",
-        "gatsby-browser.js",
-        "gatsby-config.js",
-        "gatsby-node.js",
-      ],
-      extends: ["plugin:node/recommended-script"],
-    },
-    // TypeScript files
+    /*
+     * Application Source
+     */
+
     {
       files: ["src/**/*.{ts,tsx}"],
+      extends: ["@ndhoule/eslint-config/recommended-typescript"],
       parserOptions: {
         tsconfigRootDir: __dirname,
         project: "./tsconfig.json",
       },
-      extends: ["@ndhoule/eslint-config/typescript"],
-    },
-    // React components
-    {
-      files: ["src/**/*.{js,jsx}"],
-      extends: ["@ndhoule/eslint-config/react"],
     },
     {
-      files: ["src/**/*.{ts,tsx}"],
-      extends: ["@ndhoule/eslint-config/react/typescript"],
+      files: ["src/**/*.tsx"],
+      extends: [
+        "@ndhoule/eslint-config/react",
+        "@ndhoule/eslint-config/react/jsx-runtime",
+        "@ndhoule/eslint-config/react/typescript",
+      ],
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: "./tsconfig.json",
+      },
+      rules: {
+        "react/no-unknown-property": ["error", { ignore: ["css"] }],
+      },
+    },
+
+    /*
+     * Tests
+     */
+
+    {
+      files: ["src/**/*.test.{ts,tsx}"],
+      extends: ["@ndhoule/eslint-config/jest"],
+    },
+
+    /*
+     * Config Files
+     */
+
+    {
+      files: [".*rc.js", "*.config.js"],
+      extends: ["@ndhoule/eslint-config/node"],
+    },
+    {
+      files: [".*rc.ts", "*.config.ts"],
+      extends: ["@ndhoule/eslint-config/node/typescript"],
+      parserOptions: {
+        sourceType: "module",
+        tsconfigRootDir: __dirname,
+        project: "./tsconfig.config-files.json",
+      },
     },
   ],
 };

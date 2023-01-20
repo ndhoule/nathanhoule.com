@@ -1,20 +1,13 @@
 {
+  "extends": "@tsconfig/next-strictest/tsconfig.json",
   "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
     "noEmit": true,
-    "incremental": true,
+    "plugins": [{ "name": "next" }],
 
-    "target": "esnext",
-    "module": "commonjs",
-    "sourceMap": true,
-    "strict": true,
-    "noImplicitAny": true,
-
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-
-    "jsx": "react",
+    "importsNotUsedAsValues": "remove"
   },
-
-  "include": ["src/**/*"]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "src/"],
+  "exclude": ["node_modules"]
 }
