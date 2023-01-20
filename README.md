@@ -9,19 +9,17 @@ This project uses Yarn to manage dependencies.
 To install dependencies:
 
 ```sh
-$ make install
+$ yarn install
 ```
 
 To develop:
 
 ```sh
-$ make dev
+$ yarn run dev
 ```
 
 To build the project for deployment:
 
 ```sh
-$ make build
+$ yarn run build
 ```
-
-See the `Makefile` for a full list of project tasks.
