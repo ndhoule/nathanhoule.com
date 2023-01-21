@@ -10,6 +10,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
       borderTopColor: hsl(lightBlue),
       borderTopStyle: "solid",
       borderTopWidth: "4px",
+      paddingBottom: "4px",
+      paddingLeft: "8px",
+      paddingRight: "8px",
+      paddingTop: "4px",
     }}
   >
     <div
