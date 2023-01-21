@@ -21,5 +21,7 @@ $ yarn run dev
 To build the project for deployment:
 
 ```sh
-$ yarn run build
+$ yarn run distclean && yarn run build && yarn run export
 ```
+
+On success, the built files will be output to `dist/`.
