@@ -1,8 +1,8 @@
+import { Global, css } from "@emotion/react";
 import { breakpoints } from "./breakpoints";
 import { softBlack } from "./colors";
 import { inter, lato } from "./fonts";
 import { hsl } from "./utils";
-import { Global, css } from "@emotion/react";
 
 /**
  * Headers are modularly scaled at a 1.25 ratio on desktop, 1.15 on mobile.
@@ -93,6 +93,7 @@ export const globalStyles = (
         },
 
         "html, body, #__next": {
+          height: "100%",
           width: "100vw",
         },
       },

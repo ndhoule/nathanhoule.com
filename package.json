@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "next build",
+    "build-docker": "docker build -t ndhoule/nathanhoule.com:latest .",
     "clean": "rm -rf .eslintcache *.tsbuildinfo .next/",
     "distclean": "yarn run clean && rm -rf dist/",
     "dev": "next dev",
@@ -26,25 +27,31 @@
     "typecheck:watch": "tsc --incremental --watch"
   },
   "dependencies": {
-    "@emotion/cache": "^11.10.5",
-    "@emotion/react": "^11.10.5",
-    "@next/font": "^13.1.4",
-    "next": "^13.0.5",
+    "@emotion/cache": "^11.10.7",
+    "@emotion/react": "^11.10.6",
+    "@mapbox/togeojson": "^0.16.0",
+    "@next/font": "^13.3.0",
+    "leaflet": "^1.9.3",
+    "next": "^13.3.0",
+    "node-html-parser": "^6.1.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@ndhoule/eslint-config": "8.0.0-1",
-    "@next/eslint-plugin-next": "^13.1.4",
-    "@tsconfig/next-strictest": "^1.0.0",
-    "@types/eslint": "^8",
-    "@types/node": "^18.11.10",
-    "@types/prettier": "^2",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
-    "@typescript-eslint/eslint-plugin": "~5.48.1",
-    "@typescript-eslint/parser": "~5.48.1",
-    "eslint": "^8.32.0",
+    "@next/eslint-plugin-next": "^13.3.0",
+    "@tsconfig/next-strictest": "^1.0.1",
+    "@types/eslint": "^8.37.0",
+    "@types/leaflet": "^1.9.3",
+    "@types/node": "^18.15.11",
+    "@types/prettier": "^2.7.2",
+    "@types/react": "^18.0.35",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "~5.48.2",
+    "@typescript-eslint/parser": "~5.48.2",
+    "eslint": "^8.38.0",
     "eslint-config-prettier": "~8.6.0",
     "eslint-config-problems": "~7.0.1",
     "eslint-plugin-eslint-comments": "~3.2.0",
@@ -58,7 +65,7 @@
     "eslint-plugin-react-hooks": "~4.6.0",
     "eslint-plugin-testing-library": "~5.9.1",
     "eslint-plugin-unicorn": "~45.0.2",
-    "prettier": "2.8.3",
-    "typescript": "^4.9.4"
+    "prettier": "2.8.7",
+    "typescript": "^4.9.5"
   }
 }

@@ -1,8 +1,10 @@
-import { globalStyles } from "../styles/globals";
+import "../components/JmtMap/legend_control.styles.css";
+
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import { type AppProps as BaseAppProps } from "next/app";
 import Head from "next/head";
+import { globalStyles } from "../styles/globals";
 
 export type AppProps = BaseAppProps;
 
