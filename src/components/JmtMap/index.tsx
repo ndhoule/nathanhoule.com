@@ -86,7 +86,7 @@ const PhotosLayerGroup = () => {
 
   useEffect(() => {
     void (async () => {
-      const res = await fetch(`/api/album/${PHOTO_ALBUM_ID}`, {
+      const res = await fetch(`/api/photos/album/${PHOTO_ALBUM_ID}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
