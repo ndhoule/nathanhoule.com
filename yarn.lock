@@ -344,13 +344,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.3.0":
-  version: 13.3.0
-  resolution: "@next/font@npm:13.3.0"
-  checksum: 8b3ffee19a30e98050ae06bbf96655cce29b62de014f96d38512f914ec86a1f8319bdbdb5408f26e359d69b351585ac87002aa9faee6fe19ec1d06dd6bae5eae
-  languageName: node
-  linkType: hard
-
 "@next/swc-darwin-arm64@npm:13.3.0":
   version: 13.3.0
   resolution: "@next/swc-darwin-arm64@npm:13.3.0"
@@ -2725,7 +2718,6 @@ __metadata:
     "@mapbox/togeojson": ^0.16.0
     "@ndhoule/eslint-config": 8.0.0-1
     "@next/eslint-plugin-next": ^13.3.0
-    "@next/font": ^13.3.0
     "@tsconfig/next-strictest": ^1.0.1
     "@types/eslint": ^8.37.0
     "@types/leaflet": ^1.9.3

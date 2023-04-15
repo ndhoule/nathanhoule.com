@@ -30,7 +30,6 @@
     "@emotion/cache": "^11.10.7",
     "@emotion/react": "^11.10.6",
     "@mapbox/togeojson": "^0.16.0",
-    "@next/font": "^13.3.0",
     "leaflet": "^1.9.3",
     "next": "^13.3.0",
     "node-html-parser": "^6.1.5",
