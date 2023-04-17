@@ -1,15 +1,20 @@
-import { type NextRequest } from "next/server";
+import { Readable } from "node:stream";
+import { type ReadableStream } from "node:stream/web";
+import { type NextApiRequest, type NextApiResponse } from "next";
 import { config as appConfig } from "../../../../../server/config";
-import { parseNonNil } from "../../../../../utils/parsers";
 
 export const config = {
-  runtime: "edge",
+  runtime: "nodejs",
 };
 
-const handler = async (req: NextRequest) => {
-  const id = parseNonNil(new URL(req.url).pathname.split("/").at(-1));
-  const res = await fetch(
-    `${appConfig.immich.addr}/api/asset/thumbnail/${id}`,
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id } = req.query;
+  if (typeof id !== "string") {
+    return res.status(400).json({ error: { message: "Malformed ID" } });
+  }
+
+  const proxiedRes = await fetch(
+    `${appConfig.immich.addr}/asset/thumbnail/${id}`,
     {
       headers: {
         Accept: "application/json",
@@ -19,7 +24,11 @@ const handler = async (req: NextRequest) => {
     }
   );
 
-  return res;
+  if (proxiedRes.status !== 200 || proxiedRes.body == null) {
+    return res.status(404);
+  }
+
+  Readable.fromWeb(proxiedRes.body as ReadableStream<Uint8Array>).pipe(res);
 };
 
 export default handler;

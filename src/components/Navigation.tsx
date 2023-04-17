@@ -1,31 +1,16 @@
-import { lightBlue } from "../styles/colors";
-import { hsl } from "../styles/utils";
-import { FlexRow, flexRowStyles } from "./Flexbox";
+import cn from "classnames";
+import { FlexRow } from "./Flexbox";
+import * as styles from "./Navigation.css";
 
 export const NavigationElement = ({
   children,
+  className,
   ...otherProps
 }: {
   children: React.ReactNode;
   className?: string | undefined;
 }) => (
-  <li
-    css={{
-      "&:not(:last-of-type)": {
-        marginRight: "1.7em",
-      },
-
-      "& > a": {
-        color: hsl(lightBlue),
-        textDecorationLine: "none",
-
-        "&:hover, &:active": {
-          textDecorationLine: "underline",
-        },
-      },
-    }}
-    {...otherProps}
-  >
+  <li className={cn(styles.navigationElement, className)} {...otherProps}>
     {children}
   </li>
 );
@@ -37,27 +22,14 @@ export const NavigationSection = ({
   children: React.ReactNode;
   className?: string | undefined;
 }) => (
-  <ul
-    css={[
-      flexRowStyles,
-      {
-        listStyleType: "none",
-        margin: 0,
-        marginBottom: "1em",
-        marginTop: "1em",
-        overflow: "hidden",
-        padding: 0,
-      },
-    ]}
-    {...otherProps}
-  >
+  <ul className={styles.navigationSection} {...otherProps}>
     {children}
   </ul>
 );
 
 export const Navigation = () => (
   <nav>
-    <FlexRow css={{ justifyContent: "space-between" }}>
+    <FlexRow className={styles.navigation}>
       <NavigationSection>
         {/*
         <NavigationElement>
