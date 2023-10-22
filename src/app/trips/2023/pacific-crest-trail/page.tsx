@@ -19,7 +19,7 @@ const config = {
     ] as [number, number, number, number],
   },
   photoAlbumId: "3fc46ea9-cf1e-4933-b160-d5e957b60d9c",
-  tripEnd: "2023-10-01T17:00:00.000Z",
+  tripEnd: "2023-10-31T17:00:00.000Z",
   tripId: "pacific-crest-trail",
   tripStart: "2023-05-26T17:00:00.000Z",
 };
