@@ -13,6 +13,7 @@
 set -o errexit
 set -o nounset
 
+DRY_RUN=${DRY_RUN:-0}
 IMAGE_TAG="${IMAGE_TAG:-}"
 export NOMAD_ADDR="${NOMAD_ADDR}"
 
@@ -37,6 +38,10 @@ plan_check_index=$(echo "${plan_output}" | grep "Job Modify Index: " | sed "s/Jo
 if [ -z "${plan_check_index}" ]; then
   echo "Could not extract check index from nomad plan. Aborting deployment."
   exit 1
+fi
+
+if [ "${DRY_RUN}" = 1 ] || [ "${DRY_RUN}" = "true" ]; then
+  exit 0
 fi
 
 nomad job run \
