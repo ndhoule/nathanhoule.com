@@ -16,7 +16,8 @@ const Home = () => (
       <h1 className={styles.hero}>I&apos;m Nathan Houle.</h1>
 
       <p className={styles.subhead}>
-        I&apos;m a San Francisco Bay Area-based software engineer, currently on sabbatical hiking the Pacific Crest Trail.
+        I&apos;m a San Francisco Bay Area-based software engineer, currently on
+        sabbatical hiking the Pacific Crest Trail.
       </p>
     </main>
   </Layout>
