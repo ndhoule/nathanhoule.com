@@ -8,12 +8,23 @@ job "personal-website" {
   type = "service"
 
   group "service" {
+    count = 1
+
     network {
       mode = "bridge"
 
       port "http" {
         to = 3000
       }
+    }
+
+    update {
+      max_parallel     = 1
+      canary           = 1
+      min_healthy_time = "30s"
+      healthy_deadline = "2m"
+      auto_revert      = true
+      auto_promote     = true
     }
 
     service {
@@ -24,8 +35,13 @@ job "personal-website" {
         expose   = true
         type     = "http"
         path     = "/"
-        interval = "15s"
+        interval = "5s"
         timeout  = "2s"
+
+        check_restart {
+          limit = 3
+          grace = "5s"
+        }
       }
 
       connect {
