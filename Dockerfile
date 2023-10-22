@@ -17,7 +17,11 @@ RUN yarn --immutable
 #
 
 FROM base AS app-builder
-ENV NEXT_TELEMETRY_DISABLED 1
+
+ARG NEXT_PUBLIC_MAPTILER_API_KEY
+
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_PUBLIC_MAPTILER_API_KEY=$NEXT_PUBLIC_MAPTILER_API_KEY
 
 WORKDIR /app
 COPY --from=deps-builder /app/node_modules ./node_modules
@@ -29,9 +33,10 @@ RUN yarn build
 #
 
 FROM base AS app
-ENV NEXT_TELEMETRY_DISABLED 1
 
-ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+
 WORKDIR /app
 RUN adduser --system --uid 1001 nextjs
 RUN addgroup --system --gid 1001 nodejs
