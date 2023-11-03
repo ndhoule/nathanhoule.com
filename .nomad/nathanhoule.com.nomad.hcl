@@ -66,9 +66,9 @@ job "personal-website" {
       }
 
       resources {
-        cpu        = 500
-        memory     = 1024
-        memory_max = 2048
+        cpu        = 256
+        memory     = 512
+        memory_max = 768
       }
 
       vault {
