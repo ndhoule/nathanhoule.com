@@ -1,0 +1,53 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    container: node:18
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Configure Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: yarn install --immutable
+      - run: yarn run lint
+      - run: yarn run typecheck
+  build-and-push-container-image:
+    name: Build and push container image
+    if: gitea.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          build-args: |
+            NEXT_PUBLIC_MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}
+          push: true
+          tags: |
+            ndhoule/nathanhoule.com:latest
+            ndhoule/nathanhoule.com:${{ gitea.sha }}
+  deploy:
+    name: Deploy
+    if: gitea.ref == 'refs/heads/main'
+    needs: build-and-push-container-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Configure Nomad
+        uses: nferch/setup-nomad@v4.0.0
+      - name: Deploy to Nomad
+        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" IMAGE_TAG="${{ gitea.sha }}" scripts/deploy.sh
