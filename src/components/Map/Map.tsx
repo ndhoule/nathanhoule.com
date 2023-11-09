@@ -1,5 +1,4 @@
 import { parseISO as parseISODate } from "date-fns";
-import maplibregl from "maplibre-gl";
 import ms from "ms";
 import Image from "next/image";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -12,7 +11,7 @@ import {
   Popup as MGLPopup,
   ScaleControl as MGLScaleControl,
   MapLayerMouseEvent,
-} from "react-map-gl";
+} from "react-map-gl/maplibre";
 import { z } from "zod";
 import { parseNonNull } from "../../utils/parsers";
 import { ControlPanel } from "./ControlPanel";
@@ -162,7 +161,9 @@ export const Map = ({
               mapRefCurrent.easeTo({
                 center: feature.geometry.coordinates,
                 duration: 250,
-                zoom,
+                // @ts-expect-error(ndhoule): The type on this should really be
+                // `zoom?: zoom | undefined`
+                zoom: zoom,
               });
             });
             break;
@@ -177,7 +178,6 @@ export const Map = ({
       attributionControl={false}
       initialViewState={mapConfig.initialViewState ?? {}}
       interactiveLayerIds={["current-location", "photo", "photo-clusters"]}
-      mapLib={maplibregl}
       mapStyle={`https://api.maptiler.com/maps/topo-v2/style.json?key=${
         process.env["NEXT_PUBLIC_MAPTILER_API_KEY"] ?? ""
       }`}

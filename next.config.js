@@ -5,9 +5,6 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    appDir: true,
-  },
   output: "standalone",
   reactStrictMode: true,
   // https://github.com/vanilla-extract-css/vanilla-extract/issues/1085
