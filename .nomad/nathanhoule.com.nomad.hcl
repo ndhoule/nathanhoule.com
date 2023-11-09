@@ -82,11 +82,12 @@ job "personal-website" {
         env         = true
 
         data = <<EOF
-GARMIN_MAPSHARE_MAP_ID={{ with secret "secret/data/app_personal_website" }}{{ .Data.data.garmin_mapshare_map_id | toJSON }}{{ end }}
-GARMIN_MAPSHARE_PASSWORD={{ with secret "secret/data/app_personal_website" }}{{ .Data.data.garmin_mapshare_password | toJSON }}{{ end }}
-IMMICH_ADDR=http://{{ env "NOMAD_UPSTREAM_ADDR_immich_server" | toJSON }}
-IMMICH_ALBUM_ID_WHITELIST={{ with secret "secret/data/app_personal_website" }}{{ .Data.data.immich_album_id_whitelist | toJSON }}{{ end }}
-IMMICH_API_KEY={{ with secret "secret/data/app_personal_website" }}{{ .Data.data.immich_api_key | toJSON }}{{ end }}
+GARMIN_MAPSHARE_MAP_ID="{{ with secret "secret/data/app_personal_website" }}{{ .Data.data.garmin_mapshare_map_id }}{{ end }}"
+GARMIN_MAPSHARE_PASSWORD="{{ with secret "secret/data/app_personal_website" }}{{ .Data.data.garmin_mapshare_password }}{{ end }}"
+IMMICH_ADDR="http://{{ env "NOMAD_UPSTREAM_ADDR_immich_server" | toJSON }}"
+IMMICH_ALBUM_ID_WHITELIST="{{ with secret "secret/data/app_personal_website" }}{{ .Data.data.immich_album_id_whitelist }}{{ end }}"
+IMMICH_API_KEY="{{ with secret "secret/data/app_personal_website" }}{{ .Data.data.immich_api_key }}{{ end }}"
+PORT="{{ env "NOMAD_PORT_http" }}"
 EOF
       }
     }
