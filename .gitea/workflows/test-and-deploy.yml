@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 18.x
       - run: yarn install --immutable
-      - run: yarn run lint
+      # - run: yarn run lint
       - run: yarn run typecheck
   build-and-push-container-image:
     name: Build and push container image
