@@ -40,7 +40,7 @@ job "personal-website" {
 
         check_restart {
           limit = 3
-          grace = "5s"
+          grace = "15s"
         }
       }
 
