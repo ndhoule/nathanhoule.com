@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json({ error: { message: "Not Found" } });
   }
 
-  const proxiedRes = await fetch(`${appConfig.immich.addr}/album/${id}`, {
+  const proxiedRes = await fetch(`${appConfig.immich.addr}/api/album/${id}`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

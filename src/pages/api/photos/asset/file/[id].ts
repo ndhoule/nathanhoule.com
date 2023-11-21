@@ -13,13 +13,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ error: { message: "Malformed ID" } });
   }
 
-  const proxiedRes = await fetch(`${appConfig.immich.addr}/asset/file/${id}`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-Api-Key": appConfig.immich.apiKey,
-    },
-  });
+  const proxiedRes = await fetch(
+    `${appConfig.immich.addr}/api/asset/file/${id}`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Api-Key": appConfig.immich.apiKey,
+      },
+    }
+  );
 
   if (proxiedRes.status !== 200 || proxiedRes.body == null) {
     return res.status(404);

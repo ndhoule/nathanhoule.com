@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const proxiedRes = await fetch(
-    `${appConfig.immich.addr}/asset/thumbnail/${id}`,
+    `${appConfig.immich.addr}/api/asset/thumbnail/${id}`,
     {
       headers: {
         Accept: "application/json",
