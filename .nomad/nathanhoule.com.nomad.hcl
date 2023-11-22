@@ -34,9 +34,9 @@ job "personal-website" {
       check {
         expose   = true
         type     = "http"
-        path     = "/"
-        interval = "5s"
-        timeout  = "2s"
+        path     = "/.well-known/healthcheck.json"
+        interval = "10s"
+        timeout  = "5s"
 
         check_restart {
           limit = 3
