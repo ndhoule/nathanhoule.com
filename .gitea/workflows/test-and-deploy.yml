@@ -50,4 +50,4 @@ jobs:
       - name: Configure Nomad
         uses: nferch/setup-nomad@v4.0.0
       - name: Deploy to Nomad
-        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" IMAGE_TAG="${{ gitea.sha }}" scripts/deploy.sh
+        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" IMAGE_TAG="${{ gitea.sha }}" scripts/deploy

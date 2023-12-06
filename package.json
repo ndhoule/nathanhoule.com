@@ -17,7 +17,7 @@
     "build": "next build",
     "build-docker": "docker build -t ndhoule/nathanhoule.com:latest .",
     "clean": "rm -rf .eslintcache *.tsbuildinfo .next/",
-    "deploy": "docker run --rm -v ./scripts:/data/scripts -v ./.nomad:/data/.nomad -w /data -e \"NOMAD_ADDR=${NOMAD_ADDR}\" -e \"IMAGE_TAG=${IMAGE_TAG}\" -e \"DRY_RUN=${DRY_RUN}\" -e 'NOMAD_SKIP_VERIFY=1' --entrypoint /bin/sh hashicorp/nomad scripts/deploy.sh",
+    "deploy": "docker run --rm -v ./scripts:/data/scripts -v ./.nomad:/data/.nomad -w /data -e 'NOMAD_SKIP_VERIFY=1' -e \"NOMAD_ADDR=${NOMAD_ADDR}\" -e \"DRY_RUN=${DRY_RUN}\" -e \"IMAGE=${IMAGE}\" -e \"IMAGE_TAG=${IMAGE_TAG}\" --entrypoint /bin/sh hashicorp/nomad scripts/deploy",
     "dev": "next dev",
     "distclean": "yarn run clean && rm -rf dist/",
     "export": "next export -o dist/",

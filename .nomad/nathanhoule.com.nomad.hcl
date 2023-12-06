@@ -1,8 +1,19 @@
-# vi:ft=hcl
+#############
+# Variables #
+#############
+
+variable "image" {
+  type    = string
+  default = "docker.io/ndhoule/nathanhoule.com"
+}
 
 variable "image_tag" {
   type = string
 }
+
+#############
+# Job #
+#############
 
 job "personal-website" {
   type = "service"
@@ -60,15 +71,15 @@ job "personal-website" {
       driver = "docker"
 
       config {
-        image = "ndhoule/nathanhoule.com:${var.image_tag}"
+        image = "${var.image}:${var.image_tag}"
 
         ports = ["http"]
       }
 
       resources {
         cpu        = 256
-        memory     = 512
-        memory_max = 768
+        memory     = 256
+        memory_max = 1024
       }
 
       vault {

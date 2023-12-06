@@ -14,8 +14,8 @@ set -o errexit
 set -o nounset
 
 DRY_RUN=${DRY_RUN:-0}
+IMAGE="${IMAGE:-"docker.io/ndhoule/nathanhoule.com"}"
 IMAGE_TAG="${IMAGE_TAG:-}"
-export NOMAD_ADDR="${NOMAD_ADDR}"
 
 if [ -z "${IMAGE_TAG}" ]; then
   echo "IMAGE_TAG is missing. Aborting deployment."
@@ -23,7 +23,7 @@ if [ -z "${IMAGE_TAG}" ]; then
 fi
 
 plan_output=$(
-  nomad job plan \
+  NOMAD_ADDR="${NOMAD_ADDR}" nomad job plan \
     -var "image_tag=${IMAGE_TAG}" \
     .nomad/nathanhoule.com.nomad.hcl
 ) && plan_exit_code=$? || plan_exit_code=$?
@@ -44,7 +44,8 @@ if [ "${DRY_RUN}" = 1 ] || [ "${DRY_RUN}" = "true" ]; then
   exit 0
 fi
 
-nomad job run \
+NOMAD_ADDR="${NOMAD_ADDR}" nomad job run \
   -check-index "${plan_check_index}" \
+  -var "image=${IMAGE}" \
   -var "image_tag=${IMAGE_TAG}" \
   .nomad/nathanhoule.com.nomad.hcl

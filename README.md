@@ -1,6 +1,11 @@
 # `nathanhoule.com`
 
-Nathan Houle's personal website.
+My (Nathan Houle) personal website.
+
+## Requirements
+
+- [Node.js](https://nodejs.org/en)
+- [Yarn](https://yarnpkg.com/)
 
 ## Development
 
@@ -18,10 +23,10 @@ To develop:
 $ yarn run dev
 ```
 
-To build the project for deployment:
+## Deployment
 
-```sh
-$ yarn run distclean && yarn run build && yarn run export
-```
+This site is publicly available at [www.nathanhoule.com](https://www.nathanhoule.com/).
 
-On success, the built files will be output to `dist/`.
+It's deployed as a container image to my Nomad cluster; deployments are automatically performed by CI/CD ([Gitea Actions](./.gitea/)).
+
+To deploy to Nomad manually, see `package.json#scripts.deploy` (or `yarn run deploy`); to build the image locally, see `package.json#scripts.build-docker`.
