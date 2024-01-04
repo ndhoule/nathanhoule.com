@@ -9,11 +9,13 @@ export const config = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    return res.status(400).json({ error: { message: "Malformed ID" } });
+    res.status(400).json({ error: { message: "Malformed ID" } });
+    return;
   }
 
   if (!appConfig.immich.albumIdWhitelist.has(id)) {
-    return res.status(404).json({ error: { message: "Not Found" } });
+    res.status(404).json({ error: { message: "Not Found" } });
+    return;
   }
 
   const proxiedRes = await fetch(`${appConfig.immich.addr}/api/album/${id}`, {
@@ -26,10 +28,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!proxiedRes.ok) {
     if (proxiedRes.status === 404) {
-      return res.status(404).json({ error: { message: "Not Found" } });
+      res.status(404).json({ error: { message: "Not Found" } });
+      return;
     }
 
-    return res.status(500).json({ error: { message: "Internal Error" } });
+    res.status(500).json({ error: { message: "Internal Error" } });
+    return;
   }
 
   const data = (await proxiedRes.json()) as {
@@ -53,7 +57,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         exifInfo.latitude != null &&
         exifInfo.longitude != null &&
         // TODO(ndhoule): Support videos on frontend
-        type === "IMAGE"
+        type === "IMAGE",
     )
     .map(({ id, exifInfo }) => ({
       id,
@@ -68,7 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       thumbnailUrl: `/api/photos/asset/thumbnail/${id}`,
     }));
 
-  return res.status(200).json({ data: { assets } });
+  res.status(200).json({ data: { assets } });
 };
 
 export default handler;

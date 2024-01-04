@@ -18,7 +18,7 @@ export const RouteLinesLayer = ({ id }: { id: string }) => {
         data: createDefaultRouteData(),
       }),
       select: (data) => data?.data ?? createDefaultRouteData(),
-    }
+    },
   );
 
   const {

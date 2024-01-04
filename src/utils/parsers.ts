@@ -1,7 +1,7 @@
 export const parseNonUndefined = <T>(value: T | undefined): T => {
   if (value === undefined) {
     throw new TypeError(
-      "Expected value to be non-undefined but received: undefined"
+      "Expected value to be non-undefined but received: undefined",
     );
   }
   return value;

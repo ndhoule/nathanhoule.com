@@ -17,7 +17,7 @@ const UsePhotosResponseDataSchema = z.object({
       }),
       fullUrl: z.string().nonempty(),
       thumbnailUrl: z.string().nonempty(),
-    })
+    }),
   ),
 });
 
@@ -44,7 +44,7 @@ export const usePhotos = <TData = UsePhotosData>(
   options: Omit<
     UseQueryOptions<UsePhotosData, UsePhotosError, TData>,
     "initialData" | "queryKey" | "queryFn"
-  > = {}
+  > = {},
 ) =>
   useQuery<UsePhotosData, UsePhotosError, TData>({
     queryFn: async ({ signal }) => {

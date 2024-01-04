@@ -13,7 +13,7 @@ const UseTracksDataSchema = z.object({
       data: z
         .unknown()
         .transform((value) => value as GeoJSON.FeatureCollection),
-    })
+    }),
   ),
 });
 
@@ -42,7 +42,7 @@ export const useTracks = <TData = UseTracksData>(
   options: Omit<
     UseQueryOptions<UseTracksData, UseTracksErrorData, TData>,
     "initialData" | "queryKey" | "queryFn"
-  > = {}
+  > = {},
 ) =>
   useQuery<UseTracksData, UseTracksErrorData, TData>({
     queryFn: async ({ signal }) => {

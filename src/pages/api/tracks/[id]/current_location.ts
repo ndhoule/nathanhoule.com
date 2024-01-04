@@ -17,7 +17,8 @@ const garminClient = createGarminClient({
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    return res.status(400).json({ error: { message: "Malformed ID" } });
+    res.status(400).json({ error: { message: "Malformed ID" } });
+    return;
   }
 
   const response = await garminClient.getMapKml();
@@ -103,7 +104,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })),
   };
 
-  return res.status(200).json({ data: currentLocation });
+  res.status(200).json({ data: currentLocation });
 };
 
 export default handler;

@@ -21,7 +21,7 @@ globalStyle("html, body", {
  * https://www.modularscale.com/?1=&em=&1.25=
  */
 globalStyle("html", {
-  color: `${hsl(softBlack)}`,
+  color: hsl(softBlack),
   fontFamily: "var(--base-font-family)",
   fontSize: "16px",
   letterSpacing: "0.15px",

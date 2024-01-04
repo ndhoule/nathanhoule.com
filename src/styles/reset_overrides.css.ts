@@ -9,5 +9,5 @@ globalStyle(
   "input[type='checkbox'], input[type='radio']",
   {
     all: "revert",
-  }
+  },
 );

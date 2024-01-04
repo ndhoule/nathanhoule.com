@@ -30,13 +30,13 @@ export const NavigationSection = ({
 export const Navigation = () => (
   <nav>
     <FlexRow className={styles.navigation}>
+      {/*
       <NavigationSection>
-        {/*
         <NavigationElement>
           <Link href="/">Home</Link>
         </NavigationElement>
-        */}
       </NavigationSection>
+      */}
 
       <NavigationSection>
         <NavigationElement>

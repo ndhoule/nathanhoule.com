@@ -16,8 +16,8 @@ const routes = new Map([
       data: JSON.parse(
         fs.readFileSync(
           path.join(process.cwd(), "data/routes/pct_full.json"),
-          "utf8"
-        )
+          "utf8",
+        ),
       ) as GeoJSON.FeatureCollection,
     },
   ],
@@ -29,8 +29,8 @@ const routes = new Map([
       data: JSON.parse(
         fs.readFileSync(
           path.join(process.cwd(), "data/routes/jmt_full.json"),
-          "utf8"
-        )
+          "utf8",
+        ),
       ) as GeoJSON.FeatureCollection,
     },
   ],
@@ -39,15 +39,17 @@ const routes = new Map([
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    return res.status(400).json({ error: { message: "Malformed ID" } });
+    res.status(400).json({ error: { message: "Malformed ID" } });
+    return;
   }
 
   const route = routes.get(id);
   if (route == null) {
-    return res.status(404).json({ error: { message: "Not Found" } });
+    res.status(404).json({ error: { message: "Not Found" } });
+    return;
   }
 
-  return res.status(200).json({ data: route });
+  res.status(200).json({ data: route });
 };
 
 export default handler;

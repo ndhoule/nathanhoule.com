@@ -13,7 +13,7 @@ globalStyle(
   {
     all: "unset",
     display: "revert",
-  }
+  },
 );
 
 // Preferred box-sizing value
@@ -112,5 +112,5 @@ globalStyle(
   "input[type='checkbox'], input[type='radio']",
   {
     all: "revert",
-  }
+  },
 );

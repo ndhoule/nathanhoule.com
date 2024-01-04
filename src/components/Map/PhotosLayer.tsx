@@ -1,4 +1,3 @@
-import { point } from "@turf/turf";
 import React from "react";
 import { Layer as MGLLayer, Source as MGLSource } from "react-map-gl";
 import { usePhotos } from "../../queries/photos";
@@ -14,10 +13,15 @@ export const PhotosLayer = ({ id }: { id: string }) => {
       select: ({ assets }) =>
         ({
           type: "FeatureCollection",
-          features: assets.map(({ id, exifInfo, fullUrl, thumbnailUrl }) =>
-            point(
-              [exifInfo.longitude, exifInfo.latitude],
-              {
+          features: assets.map(({ id, exifInfo, fullUrl, thumbnailUrl }) => {
+            return {
+              type: "Feature" as const,
+              id,
+              geometry: {
+                type: "Point" as const,
+                coordinates: [exifInfo.longitude, exifInfo.latitude],
+              },
+              properties: {
                 id,
                 description: exifInfo.description,
                 fullUrl,
@@ -27,11 +31,10 @@ export const PhotosLayer = ({ id }: { id: string }) => {
                 longitude: exifInfo.longitude,
                 thumbnailUrl,
               },
-              { id }
-            )
-          ),
-        } as const),
-    }
+            };
+          }),
+        }) as const,
+    },
   );
   const {
     overlays: { photos: showPhotos },

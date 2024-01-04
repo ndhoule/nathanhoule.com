@@ -11,7 +11,7 @@ const UseRoutesDataSchema = z.array(
     // FIXME(ndhoule): Validate this data
     data: z.unknown().transform((value) => value as GeoJSON.FeatureCollection),
     label: z.string().nonempty(),
-  })
+  }),
 );
 
 export type UseRoutesData = z.output<typeof UseRoutesDataSchema>;
@@ -38,7 +38,7 @@ export const useRoutes = <TData = UseRoutesData>(
   options: Omit<
     UseQueryOptions<UseRoutesData, UseRoutesErrorData, TData>,
     "initialData" | "queryKey" | "queryFn"
-  > = {}
+  > = {},
 ) =>
   useQuery<UseRoutesData, UseRoutesErrorData, TData>({
     queryFn: async ({ signal }) => {

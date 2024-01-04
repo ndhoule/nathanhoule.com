@@ -16,8 +16,8 @@ const routes = new Map([
       data: JSON.parse(
         fs.readFileSync(
           path.join(process.cwd(), "data/routes/jmt_full.json"),
-          "utf8"
-        )
+          "utf8",
+        ),
       ) as GeoJSON.FeatureCollection,
     },
   ],
@@ -29,8 +29,8 @@ const routes = new Map([
       data: JSON.parse(
         fs.readFileSync(
           path.join(process.cwd(), "data/routes/jmt_full.json"),
-          "utf8"
-        )
+          "utf8",
+        ),
       ) as GeoJSON.FeatureCollection,
     },
   ],

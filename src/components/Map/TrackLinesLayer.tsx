@@ -8,7 +8,7 @@ export const TrackLinesLayer = ({ id }: { id: string }) => {
     {
       placeholderData: () => ({ tracks: [] }),
       select: ({ tracks }) => tracks,
-    }
+    },
   );
   const {
     overlays: { tracks: showTracks },

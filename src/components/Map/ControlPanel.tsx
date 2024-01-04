@@ -24,7 +24,7 @@ const createDefaultControlPanelContext = () => ({
 });
 
 const ControlPanelContext = createContext<ControlPanelContext>(
-  createDefaultControlPanelContext()
+  createDefaultControlPanelContext(),
 );
 
 export const useControlPanel = (): ControlPanelContext =>
@@ -38,7 +38,7 @@ export const ControlPanelProvider = ({
   children?: React.ReactNode;
 }) => {
   const [controlPanelContext, setControlPanelContext] = useState(
-    createDefaultControlPanelContext()
+    createDefaultControlPanelContext(),
   );
 
   return (
@@ -84,7 +84,9 @@ export const ControlPanel = ({
               <input
                 type="checkbox"
                 checked={overlays.currentLocation}
-                onChange={() => toggleOverlay("currentLocation")}
+                onChange={() => {
+                  toggleOverlay("currentLocation");
+                }}
               />
               Current Location
             </label>
@@ -96,7 +98,9 @@ export const ControlPanel = ({
               <input
                 type="checkbox"
                 checked={overlays.routes}
-                onChange={() => toggleOverlay("routes")}
+                onChange={() => {
+                  toggleOverlay("routes");
+                }}
               />
               Route
             </label>
@@ -108,7 +112,9 @@ export const ControlPanel = ({
               <input
                 type="checkbox"
                 checked={overlays.tracks}
-                onChange={() => toggleOverlay("tracks")}
+                onChange={() => {
+                  toggleOverlay("tracks");
+                }}
               />
               Tracks
             </label>
@@ -120,7 +126,9 @@ export const ControlPanel = ({
               <input
                 type="checkbox"
                 checked={overlays.photos}
-                onChange={() => toggleOverlay("photos")}
+                onChange={() => {
+                  toggleOverlay("photos");
+                }}
               />
               Photos
             </label>

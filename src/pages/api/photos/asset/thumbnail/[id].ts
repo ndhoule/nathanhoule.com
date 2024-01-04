@@ -10,7 +10,8 @@ export const config = {
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    return res.status(400).json({ error: { message: "Malformed ID" } });
+    res.status(400).json({ error: { message: "Malformed ID" } });
+    return;
   }
 
   const proxiedRes = await fetch(
@@ -21,11 +22,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         "Content-Type": "application/json",
         "X-Api-Key": appConfig.immich.apiKey,
       },
-    }
+    },
   );
 
   if (proxiedRes.status !== 200 || proxiedRes.body == null) {
-    return res.status(404);
+    res.status(404);
+    return;
   }
 
   Readable.fromWeb(proxiedRes.body as ReadableStream<Uint8Array>).pipe(res);

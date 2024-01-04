@@ -42,7 +42,7 @@ export const CurrentLocationMarker = ({ id }: { id: string }) => {
           }
         }
       },
-    }
+    },
   );
   const {
     overlays: { currentLocation: showCurrentLocation },

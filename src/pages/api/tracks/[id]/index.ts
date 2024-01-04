@@ -28,10 +28,10 @@ const readTracks = moize.promise(async (start: string, end: string) => {
   const paths = Array.from(filenamesByBasename.entries())
     .map(([basename, filenames]) => {
       const gpxFilename = filenames.find((filename) =>
-        filename.endsWith(".gpx")
+        filename.endsWith(".gpx"),
       );
       const summaryFilename = filenames.find((filename) =>
-        filename.endsWith("_summary.json")
+        filename.endsWith("_summary.json"),
       );
       return [basename, gpxFilename, summaryFilename] as const;
     })
@@ -49,7 +49,7 @@ const readTracks = moize.promise(async (start: string, end: string) => {
           basename,
           path.join(TRACKS_DIR, gpxFilename),
           path.join(TRACKS_DIR, summaryFilename),
-        ] as const
+        ] as const,
     );
 
   const data = await Promise.all(
@@ -70,7 +70,7 @@ const readTracks = moize.promise(async (start: string, end: string) => {
           activityType: summary.activityTypeDTO.typeKey,
         },
       };
-    })
+    }),
   );
   return data.filter(({ metadata }) => metadata.activityType === "hiking");
 });
@@ -86,16 +86,18 @@ const tracksById = new Map<string, [string, string]>([
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    return res.status(400).json({ error: { message: "Malformed ID" } });
+    res.status(400).json({ error: { message: "Malformed ID" } });
+    return;
   }
 
   const dates = tracksById.get(id);
   if (dates == null) {
-    return res.status(404).json({ error: { message: "Not Found" } });
+    res.status(404).json({ error: { message: "Not Found" } });
+    return;
   }
 
   const data = await readTracks(dates[0], dates[1]);
-  return res.status(200).json({ data: { tracks: data } });
+  res.status(200).json({ data: { tracks: data } });
 };
 
 export default handler;

@@ -39,7 +39,7 @@ export const useRouteById = <TData = UseRouteByIdData>(
   options: Omit<
     UseQueryOptions<UseRouteByIdData, UseRouteByIdErrorData, TData>,
     "initialData" | "queryKey" | "queryFn"
-  > = {}
+  > = {},
 ) =>
   useQuery<UseRouteByIdData, UseRouteByIdErrorData, TData>({
     queryFn: async ({ signal }) => {

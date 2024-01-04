@@ -84,7 +84,9 @@ export const Map = ({
     const intervalId = setInterval(() => {
       setNow(new Date().toISOString());
     }, ms("1m"));
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   const isTripInProgress =
@@ -110,36 +112,32 @@ export const Map = ({
       for (const rawFeature of event.features) {
         switch (rawFeature.layer.id) {
           case "current-location": {
-            if (rawFeature.properties != null) {
-              const feature = CurrentLocationFeatureSchema.parse(rawFeature);
+            const feature = CurrentLocationFeatureSchema.parse(rawFeature);
 
-              setPopupInfo({
-                latitude: feature.properties.latitude,
-                longitude: feature.properties.longitude,
-                data: {
-                  type: "current-location",
-                  timestamp: feature.properties.timestamp,
-                },
-              });
-            }
+            setPopupInfo({
+              latitude: feature.properties.latitude,
+              longitude: feature.properties.longitude,
+              data: {
+                type: "current-location",
+                timestamp: feature.properties.timestamp,
+              },
+            });
 
             break;
           }
           case "photo": {
-            if (rawFeature.properties != null) {
-              const feature = PhotoFeatureSchema.parse(rawFeature);
+            const feature = PhotoFeatureSchema.parse(rawFeature);
 
-              setPopupInfo({
-                latitude: feature.properties.latitude,
-                longitude: feature.properties.longitude,
-                data: {
-                  type: "photo",
-                  description: feature.properties.description,
-                  fullUrl: feature.properties.fullUrl,
-                  thumbnailUrl: feature.properties.thumbnailUrl,
-                },
-              });
-            }
+            setPopupInfo({
+              latitude: feature.properties.latitude,
+              longitude: feature.properties.longitude,
+              data: {
+                type: "photo",
+                description: feature.properties.description,
+                fullUrl: feature.properties.fullUrl,
+                thumbnailUrl: feature.properties.thumbnailUrl,
+              },
+            });
 
             break;
           }
@@ -150,7 +148,7 @@ export const Map = ({
             const clusterId = feature.properties.cluster_id;
 
             const mapboxSource = mapRefCurrent.getSource(
-              "photo"
+              "photo",
             ) as GeoJSONSource;
 
             mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
@@ -163,7 +161,7 @@ export const Map = ({
                 duration: 250,
                 // @ts-expect-error(ndhoule): The type on this should really be
                 // `zoom?: zoom | undefined`
-                zoom: zoom,
+                zoom,
               });
             });
             break;
@@ -181,8 +179,13 @@ export const Map = ({
       mapStyle={`https://api.maptiler.com/maps/topo-v2/style.json?key=${
         process.env["NEXT_PUBLIC_MAPTILER_API_KEY"] ?? ""
       }`}
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-non-null-assertion
-      maxBounds={mapConfig.maxBounds!}
+      maxBounds={
+        // XXX(ndhoule): This is gross, but it's the easiest way to make
+        // `maxBounds` exhibit a `?: | undefined`-like behavior.
+        //
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        mapConfig.maxBounds!
+      }
       onClick={onClick}
       ref={mapRef}
       style={{ width: "100%", height: "100%" }}
@@ -209,7 +212,9 @@ export const Map = ({
         <MGLPopup
           latitude={popupInfo.latitude}
           longitude={popupInfo.longitude}
-          onClose={() => setPopupInfo(null)}
+          onClose={() => {
+            setPopupInfo(null);
+          }}
         >
           {(() => {
             const { data } = popupInfo;

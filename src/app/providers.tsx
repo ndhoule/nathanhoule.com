@@ -18,7 +18,7 @@ export const Providers = ({
           staleTime: ms("10m"),
         },
       },
-    })
+    }),
   );
 
   return (

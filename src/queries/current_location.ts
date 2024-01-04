@@ -40,7 +40,7 @@ export const useCurrentLocation = <TData = UseCurrentLocationData>(
   options: Omit<
     UseQueryOptions<UseCurrentLocationData, UseCurrentLocationErrorData, TData>,
     "initialData" | "queryKey" | "queryFn"
-  > = {}
+  > = {},
 ) =>
   useQuery<UseCurrentLocationData, UseCurrentLocationErrorData, TData>({
     queryFn: async ({ signal }) => {
@@ -54,7 +54,7 @@ export const useCurrentLocation = <TData = UseCurrentLocationData>(
 
       if (res.status !== 200) {
         const result = UseCurrentLocationErrorSchema.safeParse(
-          await res.json()
+          await res.json(),
         );
         if (result.success) {
           throw new Error(result.data.error.message);
@@ -63,7 +63,7 @@ export const useCurrentLocation = <TData = UseCurrentLocationData>(
       }
 
       const result = UseCurrentLocationSuccessSchema.safeParse(
-        await res.json()
+        await res.json(),
       );
       if (!result.success) {
         throw new Error("Unknown error: Failed to deserialize response data");

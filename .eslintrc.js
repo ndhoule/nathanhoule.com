@@ -8,7 +8,7 @@ module.exports = {
 
     {
       files: ["src/**/*.{ts,tsx}"],
-      extends: ["@ndhoule/eslint-config/recommended-typescript"],
+      extends: ["@ndhoule/eslint-config/typescript"],
       parserOptions: {
         tsconfigRootDir: __dirname,
         project: "./tsconfig.json",
