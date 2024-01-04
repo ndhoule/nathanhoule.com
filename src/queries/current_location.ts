@@ -49,7 +49,7 @@ export const useCurrentLocation = <TData = UseCurrentLocationData>(
           "Content-Type": "application/json",
         },
         method: "GET",
-        signal: signal ?? null,
+        signal,
       });
 
       if (res.status !== 200) {

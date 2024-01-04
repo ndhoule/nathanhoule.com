@@ -48,7 +48,7 @@ export const useRouteById = <TData = UseRouteByIdData>(
           "Content-Type": "application/json",
         },
         method: "GET",
-        signal: signal ?? null,
+        signal,
       });
 
       if (res.status !== 200) {

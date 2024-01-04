@@ -51,7 +51,7 @@ export const useTracks = <TData = UseTracksData>(
           "Content-Type": "application/json",
         },
         method: "GET",
-        signal: signal ?? null,
+        signal,
       });
 
       if (res.status !== 200) {

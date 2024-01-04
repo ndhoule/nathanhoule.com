@@ -1,5 +1,5 @@
 import ms from "ms";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Layer as MGLLayer, Source as MGLSource, useMap } from "react-map-gl";
 import { useCurrentLocation } from "../../queries/current_location";
 import { parseNonUndefined } from "../../utils/parsers";
@@ -21,32 +21,33 @@ export const CurrentLocationMarker = ({ id }: { id: string }) => {
       placeholderData: () => null,
       refetchInterval: ms("5m"),
       refetchOnWindowFocus: true,
-      onSuccess: (data) => {
-        // On first load (and only on first load), pan to current location
-        if (!hasCenteredOnLocation && mapRef.current != null && data != null) {
-          const feature = data.features.at(0);
-          if (
-            feature != null &&
-            feature.geometry.type === "Point" &&
-            feature.geometry.coordinates.length >= 2
-          ) {
-            mapRef.current.easeTo({
-              center: [
-                parseNonUndefined(feature.geometry.coordinates[0]),
-                parseNonUndefined(feature.geometry.coordinates[1]),
-              ],
-              duration: 2000,
-              zoom: 11,
-            });
-            setHasCenteredOnLocation(true);
-          }
-        }
-      },
     },
   );
   const {
     overlays: { currentLocation: showCurrentLocation },
   } = useControlPanel();
+
+  useEffect(() => {
+    // On first load (and only on first load), pan to current location
+    if (!hasCenteredOnLocation && mapRef.current != null && data != null) {
+      const feature = data.features.at(0);
+      if (
+        feature != null &&
+        feature.geometry.type === "Point" &&
+        feature.geometry.coordinates.length >= 2
+      ) {
+        mapRef.current.easeTo({
+          center: [
+            parseNonUndefined(feature.geometry.coordinates[0]),
+            parseNonUndefined(feature.geometry.coordinates[1]),
+          ],
+          duration: 2000,
+          zoom: 11,
+        });
+        setHasCenteredOnLocation(true);
+      }
+    }
+  }, [data, hasCenteredOnLocation, mapRef]);
 
   return (
     <MGLSource
@@ -59,7 +60,7 @@ export const CurrentLocationMarker = ({ id }: { id: string }) => {
         source="current-location"
         type="symbol"
         layout={{
-          "icon-image": "star_11",
+          "icon-image": "star",
           "icon-size": 2,
           visibility: showCurrentLocation ? "visible" : "none",
         }}
