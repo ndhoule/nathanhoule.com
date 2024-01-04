@@ -16,7 +16,7 @@ export type UseCurrentLocationData = z.output<
 >;
 
 const UseCurrentLocationErrorDataSchema = z.object({
-  message: z.string().nonempty(),
+  message: z.string().min(1),
 });
 
 export type UseCurrentLocationErrorData = z.output<
@@ -31,7 +31,7 @@ const UseCurrentLocationSuccessSchema = z.object({
 const UseCurrentLocationErrorSchema = z.object({
   data: z.null().default(null),
   error: z.object({
-    message: z.string().nonempty(),
+    message: z.string().min(1),
   }),
 });
 

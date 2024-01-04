@@ -7,17 +7,17 @@ const ROUTES_QUERY_KEY = "routes";
 
 const UseRoutesDataSchema = z.array(
   z.object({
-    id: z.string().nonempty(),
+    id: z.string().min(1),
     // FIXME(ndhoule): Validate this data
     data: z.unknown().transform((value) => value as GeoJSON.FeatureCollection),
-    label: z.string().nonempty(),
+    label: z.string().min(1),
   }),
 );
 
 export type UseRoutesData = z.output<typeof UseRoutesDataSchema>;
 
 const UseRoutesErrorDataSchema = z.object({
-  message: z.string().nonempty(),
+  message: z.string().min(1),
 });
 
 export type UseRoutesErrorData = z.output<typeof UseRoutesErrorDataSchema>;
@@ -30,7 +30,7 @@ const UseRoutesSuccessSchema = z.object({
 const UseRoutesErrorSchema = z.object({
   data: z.null().default(null),
   error: z.object({
-    message: z.string().nonempty(),
+    message: z.string().min(1),
   }),
 });
 

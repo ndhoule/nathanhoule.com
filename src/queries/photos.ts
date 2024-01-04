@@ -7,7 +7,7 @@ const PHOTOS_QUERY_KEY = "photos";
 const UsePhotosResponseDataSchema = z.object({
   assets: z.array(
     z.object({
-      id: z.string().nonempty(),
+      id: z.string().min(1),
       exifInfo: z.object({
         description: z.string(),
         imageHeight: z.number(),
@@ -15,14 +15,14 @@ const UsePhotosResponseDataSchema = z.object({
         latitude: z.number(),
         longitude: z.number(),
       }),
-      fullUrl: z.string().nonempty(),
-      thumbnailUrl: z.string().nonempty(),
+      fullUrl: z.string().min(1),
+      thumbnailUrl: z.string().min(1),
     }),
   ),
 });
 
 const UsePhotosResponseErrorSchema = z.object({
-  message: z.string().nonempty(),
+  message: z.string().min(1),
 });
 
 const UsePhotosSuccessSchema = z.object({

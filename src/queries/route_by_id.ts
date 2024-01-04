@@ -6,16 +6,16 @@ import { API_BASE_URL } from "./shared";
 const ROUTE_QUERY_KEY = "route";
 
 const UseRouteByIdDataSchema = z.object({
-  id: z.string().nonempty(),
+  id: z.string().min(1),
   // FIXME(ndhoule): Validate this data
   data: z.unknown().transform((value) => value as GeoJSON.FeatureCollection),
-  label: z.string().nonempty(),
+  label: z.string().min(1),
 });
 
 export type UseRouteByIdData = z.output<typeof UseRouteByIdDataSchema> | null;
 
 const UseRouteByIdErrorDataSchema = z.object({
-  message: z.string().nonempty(),
+  message: z.string().min(1),
 });
 
 export type UseRouteByIdErrorData = z.output<
@@ -30,7 +30,7 @@ const UseRouteByIdSuccessSchema = z.object({
 const UseRouteByIdErrorSchema = z.object({
   data: z.null().default(null),
   error: z.object({
-    message: z.string().nonempty(),
+    message: z.string().min(1),
   }),
 });
 

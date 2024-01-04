@@ -2,17 +2,17 @@ import { z } from "zod";
 
 const Config = z.object({
   garmin: z.object({
-    mapShareMapId: z.string().nonempty(),
-    mapSharePassword: z.string().nonempty(),
+    mapShareMapId: z.string().min(1),
+    mapSharePassword: z.string().min(1),
   }),
   immich: z.object({
-    addr: z.string().nonempty(),
+    addr: z.string().min(1),
     albumIdWhitelist: z
       .string()
       .transform((value) => value.split(","))
       .pipe(z.array(z.string().uuid()))
       .transform((values) => new Set(values)),
-    apiKey: z.string().nonempty(),
+    apiKey: z.string().min(1),
   }),
 });
 

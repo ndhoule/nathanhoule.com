@@ -8,7 +8,7 @@ const TRACKS_QUERY_KEY = "tracks";
 const UseTracksDataSchema = z.object({
   tracks: z.array(
     z.object({
-      id: z.string().nonempty(),
+      id: z.string().min(1),
       // FIXME(ndhoule): Validate this data
       data: z
         .unknown()
@@ -20,7 +20,7 @@ const UseTracksDataSchema = z.object({
 export type UseTracksData = z.output<typeof UseTracksDataSchema>;
 
 const UseTracksErrorDataSchema = z.object({
-  message: z.string().nonempty(),
+  message: z.string().min(1),
 });
 
 export type UseTracksErrorData = z.output<typeof UseTracksErrorDataSchema>;
@@ -33,7 +33,7 @@ const UseTracksSuccessSchema = z.object({
 const UseTracksErrorSchema = z.object({
   data: z.null().default(null),
   error: z.object({
-    message: z.string().nonempty(),
+    message: z.string().min(1),
   }),
 });
 
