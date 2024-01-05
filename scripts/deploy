@@ -23,7 +23,7 @@ if [ -z "${IMAGE_TAG}" ]; then
 fi
 
 plan_output=$(
-  NOMAD_ADDR="${NOMAD_ADDR}" nomad job plan \
+  NOMAD_ADDR="${NOMAD_ADDR}" NOMAD_TOKEN="${NOMAD_TOKEN}" nomad job plan \
     -var "image_tag=${IMAGE_TAG}" \
     .nomad/nathanhoule.com.nomad.hcl
 ) && plan_exit_code=$? || plan_exit_code=$?
@@ -44,7 +44,7 @@ if [ "${DRY_RUN}" = 1 ] || [ "${DRY_RUN}" = "true" ]; then
   exit 0
 fi
 
-NOMAD_ADDR="${NOMAD_ADDR}" nomad job run \
+NOMAD_ADDR="${NOMAD_ADDR}" NOMAD_TOKEN="${NOMAD_TOKEN}" nomad job run \
   -check-index "${plan_check_index}" \
   -var "image=${IMAGE}" \
   -var "image_tag=${IMAGE_TAG}" \
