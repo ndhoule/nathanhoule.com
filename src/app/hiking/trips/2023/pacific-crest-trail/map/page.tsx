@@ -26,6 +26,7 @@ const config = {
 
 export const metadata: Metadata = {
   title: "Pacific Crest Trail (2023) | Nathan Houle",
+  robots: { follow: false, index: false },
 };
 
 const Page = () => <Map {...config} />;

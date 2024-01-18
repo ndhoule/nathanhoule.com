@@ -23,6 +23,7 @@ const config = {
 
 export const metadata: Metadata = {
   title: "Uinta Highline Trail (2020) | Nathan Houle",
+  robots: { follow: false, index: false },
 };
 
 const Page = () => <Map {...config} />;
