@@ -71,6 +71,6 @@ export const usePhotos = <TData = UsePhotosData>(
       }
       return result.data.data;
     },
-    queryKey: [PHOTOS_QUERY_KEY],
+    queryKey: [PHOTOS_QUERY_KEY, id],
     ...options,
   });

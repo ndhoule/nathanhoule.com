@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import { Map } from "../../../../components/Map";
+import { Map } from "../../../../../../components/Map";
 
 const config = {
   map: {

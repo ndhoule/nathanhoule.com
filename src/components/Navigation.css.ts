@@ -8,12 +8,17 @@ export const navigationElement = style({
     "&:not(:last-of-type)": {
       marginRight: "1.7em",
     },
+
+    "&:has(a[aria-current='page'])": {
+      fontWeight: "bold",
+      borderBottom: `2px solid ${hsl(lightBlue)}`,
+    },
   },
 });
 
 globalStyle(`${navigationElement} > a`, {
   color: hsl(lightBlue),
-  textDecorationLine: "none",
+  // textDecorationLine: "none",
 });
 
 globalStyle(`${navigationElement} > a:active`, {
@@ -22,6 +27,10 @@ globalStyle(`${navigationElement} > a:active`, {
 
 globalStyle(`${navigationElement} > a:hover`, {
   textDecorationLine: "underline",
+});
+
+globalStyle(`${navigationElement} > a:hover[aria-current="page"]`, {
+  textDecorationLine: "none",
 });
 
 export const navigationSection = style([

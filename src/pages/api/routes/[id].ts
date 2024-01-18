@@ -34,6 +34,19 @@ const routes = new Map([
       ) as GeoJSON.FeatureCollection,
     },
   ],
+  [
+    "uinta-highline-trail",
+    {
+      id: "uinta-highline-trail",
+      label: "Uinta Highline Trail",
+      data: JSON.parse(
+        fs.readFileSync(
+          path.join(process.cwd(), "data/routes/uinta_highline_trail.json"),
+          "utf8",
+        ),
+      ) as GeoJSON.FeatureCollection,
+    },
+  ],
 ]);
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {

@@ -7,6 +7,20 @@ const config = {
   },
   output: "standalone",
   reactStrictMode: true,
+  redirects: async () => {
+    return [
+      {
+        source: "/trips/2023/pacific-crest-trail",
+        destination: "/hiking/trips/2023/pacific-crest-trail/map",
+        permanent: true,
+      },
+      {
+        source: "/trips/2020/john-muir-trail",
+        destination: "/hiking/trips/2020/john-muir-trail/map",
+        permanent: true,
+      },
+    ];
+  },
   rewrites: async () => {
     return [
       {
@@ -14,12 +28,6 @@ const config = {
         destination: "/api/.well-known/:path*",
       },
     ];
-  },
-  // https://github.com/vanilla-extract-css/vanilla-extract/issues/1085
-  // https://github.com/vercel/next.js/issues/49817
-  webpack: (config) => {
-    config.optimization.splitChunks = false;
-    return config;
   },
 };
 
