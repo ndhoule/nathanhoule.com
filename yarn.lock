@@ -1988,6 +1988,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"concat-stream@npm:~1.4.1":
+  version: 1.4.11
+  resolution: "concat-stream@npm:1.4.11"
+  dependencies:
+    inherits: "npm:~2.0.1"
+    readable-stream: "npm:~1.1.9"
+    typedarray: "npm:~0.0.5"
+  checksum: d65f7d2fc9e980cf9a5ce1bbfad5758e7172ff694f11614b17eccf25b63ca66f690f20146a12818e083a539afeb06c3bda02c9a32cc85fcb5f522b7739d30a08
+  languageName: node
+  linkType: hard
+
 "convert-source-map@npm:^2.0.0":
   version: 2.0.0
   resolution: "convert-source-map@npm:2.0.0"
@@ -2001,6 +2012,13 @@ __metadata:
   dependencies:
     browserslist: "npm:^4.22.2"
   checksum: aa21ad2f0c946be7a8ecef92233bc003a38fa27e43a925fcd9b79e32ae49b879e0f5c23459ffc310df38ee547389b8e5e43a6a8be0b2369b9b9ebf3d04ae69b9
+  languageName: node
+  linkType: hard
+
+"core-util-is@npm:~1.0.0":
+  version: 1.0.3
+  resolution: "core-util-is@npm:1.0.3"
+  checksum: 9de8597363a8e9b9952491ebe18167e3b36e7707569eed0ebf14f8bba773611376466ae34575bca8cfe3c767890c859c74056084738f09d4e4a6f902b2ad7d99
   languageName: node
   linkType: hard
 
@@ -3493,7 +3511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2":
+"inherits@npm:2, inherits@npm:~2.0.1":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: cd45e923bee15186c07fa4c89db0aace24824c482fb887b528304694b2aa6ff8a898da8657046a5dcf3e46cd6db6c61629551f9215f208d7c3f157cf9b290521
@@ -3791,6 +3809,13 @@ __metadata:
     call-bind: "npm:^1.0.2"
     get-intrinsic: "npm:^1.1.1"
   checksum: 8f2ddb9639716fd7936784e175ea1183c5c4c05274c34f34f6a53175313cb1c9c35a8b795623306995e2f7cc8f25aa46302f15a2113e51c5052d447be427195c
+  languageName: node
+  linkType: hard
+
+"isarray@npm:0.0.1":
+  version: 0.0.1
+  resolution: "isarray@npm:0.0.1"
+  checksum: 49191f1425681df4a18c2f0f93db3adb85573bcdd6a4482539d98eac9e705d8961317b01175627e860516a2fc45f8f9302db26e5a380a97a520e272e2a40a8d4
   languageName: node
   linkType: hard
 
@@ -4226,6 +4251,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimist@npm:1.2.6":
+  version: 1.2.6
+  resolution: "minimist@npm:1.2.6"
+  checksum: b956a7d48669c5007f0afce100a92d3af18e77939a25b5b4f62e9ea07c2777033608327e14c2af85684d5cd504f623f2a04d30a4a43379d21dd3c6dcf12b8ab8
+  languageName: node
+  linkType: hard
+
 "minimist@npm:^1.2.0, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
@@ -4421,6 +4453,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-map-gl: "npm:^7.1.7"
+    simplify-geojson: "npm:^1.0.5"
     typescript: "npm:^5.3.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -5014,6 +5047,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"readable-stream@npm:~1.1.9":
+  version: 1.1.14
+  resolution: "readable-stream@npm:1.1.14"
+  dependencies:
+    core-util-is: "npm:~1.0.0"
+    inherits: "npm:~2.0.1"
+    isarray: "npm:0.0.1"
+    string_decoder: "npm:~0.10.x"
+  checksum: 1aa2cf4bd02f9ab3e1d57842a43a413b52be5300aa089ad1f2e3cea00684532d73edc6a2ba52b0c3210d8b57eb20a695a6d2b96d1c6085ee979c6021ad48ad20
+  languageName: node
+  linkType: hard
+
 "reflect.getprototypeof@npm:^1.0.4":
   version: 1.0.4
   resolution: "reflect.getprototypeof@npm:1.0.4"
@@ -5340,6 +5385,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"simplify-geojson@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "simplify-geojson@npm:1.0.5"
+  dependencies:
+    concat-stream: "npm:~1.4.1"
+    minimist: "npm:1.2.6"
+    simplify-geometry: "npm:0.0.2"
+  bin:
+    simplify-geojson: cli.js
+  checksum: dae6da702485f47eb7c2c9355003acbb541cb127efda25a3beb6a832f473efe2d7171467dcb419e015f3c08e48546889e3aa43c89ab6dcaa103b0f18ad4a4202
+  languageName: node
+  linkType: hard
+
+"simplify-geometry@npm:0.0.2":
+  version: 0.0.2
+  resolution: "simplify-geometry@npm:0.0.2"
+  checksum: 3b6aab797f7847bb4958a40863a722bcb6d55acc4fdc016c5053ab28a4ccd48d0fc22e80f8c9d944c99c65930cb1c6b38fbda247c0aa0a634e25adc6e323123a
+  languageName: node
+  linkType: hard
+
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -5555,6 +5620,13 @@ __metadata:
     define-properties: "npm:^1.2.0"
     es-abstract: "npm:^1.22.1"
   checksum: 6e594d3a61b127d243b8be1312e9f78683abe452cfe0bcafa3e0dc62ad6f030ccfb64d87ed3086fb7cb540fda62442c164d237cc5cc4d53c6e3eb659c29a0aeb
+  languageName: node
+  linkType: hard
+
+"string_decoder@npm:~0.10.x":
+  version: 0.10.31
+  resolution: "string_decoder@npm:0.10.31"
+  checksum: cc43e6b1340d4c7843da0e37d4c87a4084c2342fc99dcf6563c3ec273bb082f0cbd4ebf25d5da19b04fb16400d393885fda830be5128e1c416c73b5a6165f175
   languageName: node
   linkType: hard
 
@@ -5823,6 +5895,13 @@ __metadata:
     for-each: "npm:^0.3.3"
     is-typed-array: "npm:^1.1.9"
   checksum: 0444658acc110b233176cb0b7689dcb828b0cfa099ab1d377da430e8553b6fdcdce882360b7ffe9ae085b6330e1d39383d7b2c61574d6cd8eef651d3e4a87822
+  languageName: node
+  linkType: hard
+
+"typedarray@npm:~0.0.5":
+  version: 0.0.7
+  resolution: "typedarray@npm:0.0.7"
+  checksum: 3a0f29df4d5457c1d75a0a4851def49337b8dd12dcb945cd9ed08bd98fcd53daa5a98935d434504fb0eb5a3d2505f09b84ea45405d8b92355f1d01bee6b7ea11
   languageName: node
   linkType: hard
 
