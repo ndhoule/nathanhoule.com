@@ -10,5 +10,5 @@ export const GET = (
   if (route == null) {
     return Response.json({ error: { message: "Not Found" } }, { status: 404 });
   }
-  return Response.json({ data: route }, { status: 404 });
+  return Response.json({ data: route });
 };
