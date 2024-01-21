@@ -1,4 +1,4 @@
-import { config } from "../../../../../../server/config";
+import { getConfig } from "../../../../../../server/config";
 
 export const runtime = "edge";
 
@@ -6,6 +6,8 @@ export const GET = async (
   _req: Request,
   { params }: { params: { id: string } },
 ): Promise<Response> => {
+  const config = getConfig();
+
   const proxiedRes = await fetch(
     `${config.immich.addr}/api/asset/thumbnail/${params.id}`,
     {

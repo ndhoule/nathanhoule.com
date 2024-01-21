@@ -1,17 +1,18 @@
 import { kml as kmlToGeoJSON } from "@tmcw/togeojson";
 import { DOMParser } from "@xmldom/xmldom";
 import * as d from "date-fns";
-import { config } from "../../../../../server/config";
+import { getConfig } from "../../../../../server/config";
 import { createGarminClient } from "../../../../../server/garmin";
 
 export const runtime = "edge";
 
-const garminClient = createGarminClient({
-  auth: { password: config.garmin.mapSharePassword },
-  mapId: config.garmin.mapShareMapId,
-});
-
 export const GET = async (_req: Request): Promise<Response> => {
+  const config = getConfig();
+  const garminClient = createGarminClient({
+    auth: { password: config.garmin.mapSharePassword },
+    mapId: config.garmin.mapShareMapId,
+  });
+
   const response = await garminClient.getMapKml();
   const xml = await response.text();
   const parsedXml = new DOMParser().parseFromString(xml, "text/xml");

@@ -1,4 +1,4 @@
-import { config } from "../../../../../server/config";
+import { getConfig } from "../../../../../server/config";
 import { parseNonNil } from "../../../../../utils/parsers";
 
 export const runtime = "edge";
@@ -7,6 +7,8 @@ export const GET = async (
   _req: Request,
   { params }: { params: { id: string } },
 ): Promise<Response> => {
+  const config = getConfig();
+
   if (!config.immich.albumIdWhitelist.has(params.id)) {
     return Response.json({ error: { message: "Not Found" } }, { status: 404 });
   }

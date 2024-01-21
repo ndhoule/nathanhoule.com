@@ -1,6 +1,7 @@
+import moize from "moize";
 import { z } from "zod";
 
-const Config = z.object({
+const ConfigSchema = z.object({
   garmin: z.object({
     mapShareMapId: z.string().min(1),
     mapSharePassword: z.string().min(1),
@@ -16,14 +17,18 @@ const Config = z.object({
   }),
 });
 
-export const config = Config.parse({
-  garmin: {
-    mapShareMapId: process.env["GARMIN_MAPSHARE_MAP_ID"],
-    mapSharePassword: process.env["GARMIN_MAPSHARE_PASSWORD"],
-  },
-  immich: {
-    addr: process.env["IMMICH_ADDR"],
-    albumIdWhitelist: process.env["IMMICH_ALBUM_ID_WHITELIST"],
-    apiKey: process.env["IMMICH_API_KEY"],
-  },
+export type Config = z.output<typeof ConfigSchema>;
+
+export const getConfig = moize((): Config => {
+  return ConfigSchema.parse({
+    garmin: {
+      mapShareMapId: process.env["GARMIN_MAPSHARE_MAP_ID"],
+      mapSharePassword: process.env["GARMIN_MAPSHARE_PASSWORD"],
+    },
+    immich: {
+      addr: process.env["IMMICH_ADDR"],
+      albumIdWhitelist: process.env["IMMICH_ALBUM_ID_WHITELIST"],
+      apiKey: process.env["IMMICH_API_KEY"],
+    },
+  });
 });
