@@ -3,11 +3,8 @@ import path from "node:path";
 import { gpx as gpxToGeoJSON } from "@tmcw/togeojson";
 import { DOMParser } from "@xmldom/xmldom";
 import moize from "moize";
-import { type NextApiRequest, type NextApiResponse } from "next";
 
-export const config = {
-  runtime: "nodejs",
-};
+export const runtime = "nodejs";
 
 const TRACKS_DIR = path.join(process.cwd(), "data/tracks");
 
@@ -83,21 +80,16 @@ const tracksById = new Map<string, [string, string]>([
   ],
 ]);
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-  if (typeof id !== "string") {
-    res.status(400).json({ error: { message: "Malformed ID" } });
-    return;
-  }
+export const GET = async (
+  _req: Request,
+  { params }: { params: { id: string } },
+): Promise<Response> => {
+  const dates = tracksById.get(params.id);
 
-  const dates = tracksById.get(id);
   if (dates == null) {
-    res.status(404).json({ error: { message: "Not Found" } });
-    return;
+    return Response.json({ error: { message: "Not Found" } }, { status: 404 });
   }
 
   const data = await readTracks(dates[0], dates[1]);
-  res.status(200).json({ data: { tracks: data } });
+  return Response.json({ data: { tracks: data } });
 };
-
-export default handler;

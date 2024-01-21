@@ -1,26 +1,17 @@
 import { kml as kmlToGeoJSON } from "@tmcw/togeojson";
 import { DOMParser } from "@xmldom/xmldom";
 import * as d from "date-fns";
-import { type NextApiRequest, type NextApiResponse } from "next";
-import { config as appConfig } from "../../../../server/config";
-import { createGarminClient } from "../../../../server/garmin";
+import { config } from "../../../../../server/config";
+import { createGarminClient } from "../../../../../server/garmin";
 
-export const config = {
-  runtime: "nodejs",
-};
+export const runtime = "edge";
 
 const garminClient = createGarminClient({
-  auth: { password: appConfig.garmin.mapSharePassword },
-  mapId: appConfig.garmin.mapShareMapId,
+  auth: { password: config.garmin.mapSharePassword },
+  mapId: config.garmin.mapShareMapId,
 });
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-  if (typeof id !== "string") {
-    res.status(400).json({ error: { message: "Malformed ID" } });
-    return;
-  }
-
+export const GET = async (_req: Request): Promise<Response> => {
   const response = await garminClient.getMapKml();
   const xml = await response.text();
   const parsedXml = new DOMParser().parseFromString(xml, "text/xml");
@@ -104,7 +95,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })),
   };
 
-  res.status(200).json({ data: currentLocation });
+  return Response.json({ data: currentLocation });
 };
-
-export default handler;
