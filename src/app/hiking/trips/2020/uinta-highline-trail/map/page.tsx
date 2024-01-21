@@ -1,6 +1,8 @@
 import { type Metadata } from "next";
 import { Map } from "../../../../../../components/Map";
 
+export const runtime = "edge";
+
 const config = {
   map: {
     initialViewState: {
