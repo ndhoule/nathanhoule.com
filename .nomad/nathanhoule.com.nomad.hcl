@@ -92,6 +92,7 @@ job "personal-website" {
         env         = true
 
         data = <<EOF
+API_BASE_URL="https://www.nathanhoule.com/api"
 GARMIN_MAPSHARE_MAP_ID="{{ with secret "secret/data/default/personal-website" }}{{ .Data.data.garmin_mapshare_map_id }}{{ end }}"
 GARMIN_MAPSHARE_PASSWORD="{{ with secret "secret/data/default/personal-website" }}{{ .Data.data.garmin_mapshare_password }}{{ end }}"
 HOSTNAME="127.0.0.1"
