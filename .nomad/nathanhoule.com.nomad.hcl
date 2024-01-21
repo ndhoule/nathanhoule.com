@@ -77,8 +77,8 @@ job "personal-website" {
       }
 
       resources {
-        cpu        = 256
-        memory     = 256
+        cpu        = 250
+        memory     = 512
         memory_max = 1024
       }
 
