@@ -10,7 +10,7 @@ export const Providers = ({
 }: {
   children?: React.ReactNode | undefined;
 }) => {
-  const [client] = useState(
+  const [queryClient] = useState(
     new QueryClient({
       defaultOptions: {
         queries: {
@@ -22,7 +22,7 @@ export const Providers = ({
   );
 
   return (
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       {children}
     </QueryClientProvider>

@@ -1,3 +1,5 @@
+"use client";
+
 import { parseISO as parseISODate } from "date-fns";
 import ms from "ms";
 import Image from "next/image";

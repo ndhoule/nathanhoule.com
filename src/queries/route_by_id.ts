@@ -1,9 +1,16 @@
-import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import {
+  type QueryClient,
+  type QueryFunction,
+  type UseQueryOptions,
+  useQuery,
+} from "@tanstack/react-query";
 import type GeoJSON from "geojson";
 import { z } from "zod";
 import { API_BASE_URL } from "./shared";
 
 const ROUTE_QUERY_KEY = "route";
+
+type QueryKey = readonly [typeof ROUTE_QUERY_KEY, { id: string }];
 
 const UseRouteByIdDataSchema = z.object({
   id: z.string().min(1),
@@ -34,41 +41,61 @@ const UseRouteByIdErrorSchema = z.object({
   }),
 });
 
+const queryFn: QueryFunction<UseRouteByIdData, QueryKey> = async ({
+  signal,
+  queryKey: [, { id }],
+}) => {
+  const res = await fetch(`${API_BASE_URL}/routes/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    signal,
+  });
+
+  if (res.status !== 200) {
+    if (res.status === 404) {
+      return null;
+    }
+
+    const result = UseRouteByIdErrorSchema.safeParse(await res.json());
+    if (result.success) {
+      throw new Error(result.data.error.message);
+    }
+    throw new Error("Unknown error: Failed to deserialize error response");
+  }
+
+  const result = UseRouteByIdSuccessSchema.safeParse(await res.json());
+  if (!result.success) {
+    throw new Error("Unknown error: Failed to deserialize response data");
+  }
+  return result.data.data;
+};
+
 export const useRouteById = <TData = UseRouteByIdData>(
   { id }: { id: string },
   options: Omit<
-    UseQueryOptions<UseRouteByIdData, UseRouteByIdErrorData, TData>,
+    UseQueryOptions<UseRouteByIdData, UseRouteByIdErrorData, TData, QueryKey>,
     "initialData" | "queryKey" | "queryFn"
   > = {},
 ) =>
-  useQuery<UseRouteByIdData, UseRouteByIdErrorData, TData>({
-    queryFn: async ({ signal }) => {
-      const res = await fetch(`${API_BASE_URL}/routes/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        signal,
-      });
-
-      if (res.status !== 200) {
-        if (res.status === 404) {
-          return null;
-        }
-
-        const result = UseRouteByIdErrorSchema.safeParse(await res.json());
-        if (result.success) {
-          throw new Error(result.data.error.message);
-        }
-        throw new Error("Unknown error: Failed to deserialize error response");
-      }
-
-      const result = UseRouteByIdSuccessSchema.safeParse(await res.json());
-      if (!result.success) {
-        throw new Error("Unknown error: Failed to deserialize response data");
-      }
-      return result.data.data;
-    },
-    queryKey: [ROUTE_QUERY_KEY, id],
+  useQuery<UseRouteByIdData, UseRouteByIdErrorData, TData, QueryKey>({
+    queryFn,
+    queryKey: [ROUTE_QUERY_KEY, { id }],
     ...options,
   });
+
+export const prefetchRouteById = async <TData = UseRouteByIdData>(
+  queryClient: QueryClient,
+  { id }: { id: string },
+) => {
+  await queryClient.prefetchQuery<
+    UseRouteByIdData,
+    UseRouteByIdErrorData,
+    TData,
+    QueryKey
+  >({
+    queryKey: [ROUTE_QUERY_KEY, { id }],
+    queryFn,
+  });
+};
