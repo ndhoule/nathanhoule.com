@@ -1,32 +1,30 @@
 # `nathanhoule.com`
 
-My (Nathan Houle) personal website.
+My (Nathan Houle's) personal website.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/en)
-- [Yarn](https://yarnpkg.com/)
+- [Node.js](https://nodejs.org/en) 24.22.0 or later
+- [pnpm](https://pnpm.io/)
 
 ## Development
-
-This project uses Yarn to manage dependencies.
 
 To install dependencies:
 
 ```sh
-$ yarn install
+pnpm install
 ```
 
 To develop:
 
 ```sh
-$ yarn run dev
+pnpm run dev
 ```
 
 ## Deployment
 
 This site is publicly available at [www.nathanhoule.com](https://www.nathanhoule.com/).
 
-It's deployed as a container image to my Nomad cluster; deployments are automatically performed by CI/CD ([Gitea Actions](./.gitea/)).
+It's deployed as a container image to my Nomad cluster; deployments are performed by CI/CD ([Forgejo Actions](./.forgejo/)).
 
-To deploy to Nomad manually, see `package.json#scripts.deploy` (or `yarn run deploy`); to build the image locally, see `package.json#scripts.build-docker`.
+To deploy to Nomad manually, run `pnpm run deploy`. To build the image locally, run `pnpm run build-docker`.

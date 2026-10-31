@@ -29,9 +29,7 @@ const UseRoutesSuccessSchema = z.object({
 
 const UseRoutesErrorSchema = z.object({
   data: z.null().default(null),
-  error: z.object({
-    message: z.string().min(1),
-  }),
+  error: UseRoutesErrorDataSchema,
 });
 
 export const useRoutes = <TData = UseRoutesData>(

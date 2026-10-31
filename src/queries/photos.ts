@@ -1,5 +1,4 @@
 import {
-  type QueryClient,
   type QueryFunction,
   type UseQueryOptions,
   useQuery,
@@ -10,6 +9,11 @@ import { API_BASE_URL } from "./shared";
 const PHOTOS_QUERY_KEY = "photos";
 
 type QueryKey = readonly [typeof PHOTOS_QUERY_KEY, { id: string }];
+
+export const photosQueryKey = ({ id }: { id: string }): QueryKey => [
+  PHOTOS_QUERY_KEY,
+  { id },
+];
 
 const UsePhotosResponseDataSchema = z.object({
   assets: z.array(
@@ -83,21 +87,6 @@ export const usePhotos = <TData = UsePhotosData>(
 ) =>
   useQuery<UsePhotosData, UsePhotosErrorData, TData, QueryKey>({
     queryFn,
-    queryKey: [PHOTOS_QUERY_KEY, { id }],
+    queryKey: photosQueryKey({ id }),
     ...options,
   });
-
-export const prefetchPhotos = async <TData = UsePhotosData>(
-  queryClient: QueryClient,
-  { id }: { id: string },
-) => {
-  await queryClient.prefetchQuery<
-    UsePhotosData,
-    UsePhotosErrorData,
-    TData,
-    QueryKey
-  >({
-    queryKey: [PHOTOS_QUERY_KEY, { id }],
-    queryFn,
-  });
-};

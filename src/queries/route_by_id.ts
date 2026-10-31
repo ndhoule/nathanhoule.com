@@ -1,5 +1,4 @@
 import {
-  type QueryClient,
   type QueryFunction,
   type UseQueryOptions,
   useQuery,
@@ -11,6 +10,11 @@ import { API_BASE_URL } from "./shared";
 const ROUTE_QUERY_KEY = "route";
 
 type QueryKey = readonly [typeof ROUTE_QUERY_KEY, { id: string }];
+
+export const routeByIdQueryKey = ({ id }: { id: string }): QueryKey => [
+  ROUTE_QUERY_KEY,
+  { id },
+];
 
 const UseRouteByIdDataSchema = z.object({
   id: z.string().min(1),
@@ -36,9 +40,7 @@ const UseRouteByIdSuccessSchema = z.object({
 
 const UseRouteByIdErrorSchema = z.object({
   data: z.null().default(null),
-  error: z.object({
-    message: z.string().min(1),
-  }),
+  error: UseRouteByIdErrorDataSchema,
 });
 
 const queryFn: QueryFunction<UseRouteByIdData, QueryKey> = async ({
@@ -81,21 +83,6 @@ export const useRouteById = <TData = UseRouteByIdData>(
 ) =>
   useQuery<UseRouteByIdData, UseRouteByIdErrorData, TData, QueryKey>({
     queryFn,
-    queryKey: [ROUTE_QUERY_KEY, { id }],
+    queryKey: routeByIdQueryKey({ id }),
     ...options,
   });
-
-export const prefetchRouteById = async <TData = UseRouteByIdData>(
-  queryClient: QueryClient,
-  { id }: { id: string },
-) => {
-  await queryClient.prefetchQuery<
-    UseRouteByIdData,
-    UseRouteByIdErrorData,
-    TData,
-    QueryKey
-  >({
-    queryKey: [ROUTE_QUERY_KEY, { id }],
-    queryFn,
-  });
-};

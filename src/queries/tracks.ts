@@ -1,5 +1,4 @@
 import {
-  type QueryClient,
   type QueryFunction,
   type UseQueryOptions,
   useQuery,
@@ -11,6 +10,11 @@ import { API_BASE_URL } from "./shared";
 const TRACKS_QUERY_KEY = "tracks";
 
 type QueryKey = readonly [typeof TRACKS_QUERY_KEY, { id: string }];
+
+export const tracksQueryKey = ({ id }: { id: string }): QueryKey => [
+  TRACKS_QUERY_KEY,
+  { id },
+];
 
 const UseTracksDataSchema = z.object({
   tracks: z.array(
@@ -39,9 +43,7 @@ const UseTracksSuccessSchema = z.object({
 
 const UseTracksErrorSchema = z.object({
   data: z.null().default(null),
-  error: z.object({
-    message: z.string().min(1),
-  }),
+  error: UseTracksErrorDataSchema,
 });
 
 const queryFn: QueryFunction<UseTracksData, QueryKey> = async ({
@@ -80,21 +82,6 @@ export const useTracks = <TData = UseTracksData>(
 ) =>
   useQuery<UseTracksData, UseTracksErrorData, TData, QueryKey>({
     queryFn,
-    queryKey: [TRACKS_QUERY_KEY, { id }],
+    queryKey: tracksQueryKey({ id }),
     ...options,
   });
-
-export const prefetchTracks = async <TData = UseTracksData>(
-  queryClient: QueryClient,
-  { id }: { id: string },
-) => {
-  await queryClient.prefetchQuery<
-    UseTracksData,
-    UseTracksErrorData,
-    TData,
-    QueryKey
-  >({
-    queryKey: [TRACKS_QUERY_KEY, { id }],
-    queryFn,
-  });
-};

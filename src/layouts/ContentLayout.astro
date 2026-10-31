@@ -1,0 +1,17 @@
+---
+import type { ComponentProps } from "astro/types";
+import Navigation from "../components/Navigation.astro";
+import BaseLayout from "./BaseLayout.astro";
+import * as styles from "./ContentLayout.css";
+
+type Props = ComponentProps<typeof BaseLayout>;
+---
+
+<BaseLayout {...Astro.props}>
+  <div class={styles.layoutOuter}>
+    <div class={styles.layoutInner}>
+      <Navigation />
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

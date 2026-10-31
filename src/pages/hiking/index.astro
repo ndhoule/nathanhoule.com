@@ -1,0 +1,38 @@
+---
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import * as styles from "../../styles/hiking.css";
+---
+
+<ContentLayout title="Hiking | Nathan Houle" robots="nofollow">
+  <main class={styles.mainContainer}>
+    <p class={styles.subhead}>
+      I'm an avid backpacker and occasional long-distance hiker.
+    </p>
+
+    <p class={styles.subhead}>Some of the hikes I've done include:</p>
+
+    <ul class={styles.bulletedList}>
+      <li>
+        <a
+          class={styles.link}
+          href="/hiking/trips/2023/pacific-crest-trail/map"
+        >
+          Pacific Crest Trail (2023)
+        </a>
+      </li>
+      <li>
+        <a
+          class={styles.link}
+          href="/hiking/trips/2020/uinta-highline-trail/map"
+        >
+          Uinta Highline Trail (2020)
+        </a>
+      </li>
+      <li>
+        <a class={styles.link} href="/hiking/trips/2020/john-muir-trail/map">
+          John Muir Trail (2020)
+        </a>
+      </li>
+    </ul>
+  </main>
+</ContentLayout>

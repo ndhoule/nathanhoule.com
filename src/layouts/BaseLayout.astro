@@ -1,0 +1,29 @@
+---
+import "../styles/reset.css";
+import "../styles/reset_overrides.css";
+import "../styles/globals.css";
+
+import { Font } from "astro:assets";
+
+interface Props {
+  robots?: string | undefined;
+  title: string;
+}
+
+const { robots, title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {robots != null && <meta name="robots" content={robots} />}
+    <Font cssVariable="--header-font-family" preload />
+    <Font cssVariable="--base-font-family" preload />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

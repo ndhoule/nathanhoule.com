@@ -1,4 +1,4 @@
-import { Layer as MGLLayer, Source as MGLSource } from "react-map-gl";
+import { Layer as MGLLayer, Source as MGLSource } from "@vis.gl/react-maplibre";
 import { useTracks } from "../../queries/tracks";
 import { useControlPanel } from "./ControlPanel";
 

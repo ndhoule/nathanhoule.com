@@ -1,0 +1,27 @@
+---
+import TripMapPage from "../../../../../components/TripMapPage.astro";
+
+export const prerender = false;
+---
+
+<TripMapPage
+  title="Pacific Crest Trail (2023) | Nathan Houle"
+  map={{
+    initialViewState: {
+      bounds: [
+        // SW
+        -124.88258554454468, 32.65571245296696,
+        // NE
+        -114.30130129473933, 49.00398836485662,
+      ],
+    },
+    maxBounds: [
+      // SW
+      -136.09690763237217, 22.029278549400683,
+      // NE
+      -98.05219538673303, 54.04133322042521,
+    ],
+  }}
+  photoAlbumId="3fc46ea9-cf1e-4933-b160-d5e957b60d9c"
+  tripId="pacific-crest-trail"
+/>

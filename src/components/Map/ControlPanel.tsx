@@ -1,9 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import * as styles from "./ControlPanel.css";
 
 export type ControlPanelContext = {
   overlays: {
-    currentLocation: boolean;
     photos: boolean;
     routes: boolean;
     tracks: boolean;
@@ -13,7 +12,6 @@ export type ControlPanelContext = {
 
 const createDefaultControlPanelContext = () => ({
   overlays: {
-    currentLocation: true,
     photos: true,
     routes: true,
     tracks: true,
@@ -38,36 +36,37 @@ export const ControlPanelProvider = ({
   children?: React.ReactNode;
 }) => {
   const [controlPanelContext, setControlPanelContext] = useState(
-    createDefaultControlPanelContext(),
+    createDefaultControlPanelContext,
+  );
+
+  const value = useMemo(
+    (): ControlPanelContext => ({
+      ...controlPanelContext,
+      toggleOverlay: (overlay) => {
+        setControlPanelContext((context) => ({
+          ...context,
+          overlays: {
+            ...context.overlays,
+            [overlay]: !context.overlays[overlay],
+          },
+        }));
+      },
+    }),
+    [controlPanelContext],
   );
 
   return (
-    <ControlPanelContext.Provider
-      value={{
-        ...controlPanelContext,
-        toggleOverlay: (overlay) => {
-          setControlPanelContext({
-            ...controlPanelContext,
-            overlays: {
-              ...controlPanelContext.overlays,
-              [overlay]: !controlPanelContext.overlays[overlay],
-            },
-          });
-        },
-      }}
-    >
+    <ControlPanelContext.Provider value={value}>
       {children}
     </ControlPanelContext.Provider>
   );
 };
 
 export const ControlPanel = ({
-  showCurrentLocationSelector = true,
   showPhotosSelector = true,
   showRoutesSelector = true,
   showTracksSelector = true,
 }: {
-  showCurrentLocationSelector?: boolean;
   showPhotosSelector?: boolean;
   showTracksSelector?: boolean;
   showRoutesSelector?: boolean;
@@ -78,20 +77,6 @@ export const ControlPanel = ({
     <div className={styles.controlPanel}>
       <div>
         <b>Overlays</b>
-        {showCurrentLocationSelector && (
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={overlays.currentLocation}
-                onChange={() => {
-                  toggleOverlay("currentLocation");
-                }}
-              />
-              Current Location
-            </label>
-          </div>
-        )}
         {showRoutesSelector && (
           <div>
             <label>

@@ -1,0 +1,24 @@
+---
+import TripMapPage from "../../../../../components/TripMapPage.astro";
+
+export const prerender = false;
+---
+
+<TripMapPage
+  title="Uinta Highline Trail (2020) | Nathan Houle"
+  map={{
+    initialViewState: {
+      latitude: 40.80966221296787,
+      longitude: -110.13463018180366,
+      zoom: 9,
+    },
+    maxBounds: [
+      // SW
+      -111.88694957955282, 40.024470320012675,
+      // NE
+      -108.41801635172025, 41.57128958437155,
+    ],
+  }}
+  photoAlbumId="9d2e6544-bde5-4bd4-ae0f-46ed8509c004"
+  tripId="uinta-highline-trail"
+/>

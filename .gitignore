@@ -6,26 +6,13 @@
 *.pem
 
 # dependencies
-.yarn/*
-!.yarn/cache
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+/node_modules/
 
 # TypeScript
 *.tsbuildinfo
-next-env.d.ts
 
-# ESLint
-.eslintcache
-
-# VSCode
-/.vscode/
-
-# next.js
-/.next/
+# Astro
+/.astro/
 /dist/
 
 # dotenv files

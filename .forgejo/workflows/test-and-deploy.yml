@@ -6,22 +6,22 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:24
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Configure Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
-      - run: yarn install --immutable
-      # - run: yarn run lint
-      - run: yarn run typecheck
+          node-version: 24.x
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
   build-and-push-container-image:
     name: Build and push container image
     if: forgejo.ref == 'refs/heads/main'
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-js-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            NEXT_PUBLIC_MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}
+            PUBLIC_MAPTILER_API_KEY=${{ secrets.PUBLIC_MAPTILER_API_KEY }}
           push: true
           tags: |
             ndhoule/nathanhoule.com:latest

@@ -1,0 +1,24 @@
+---
+import TripMapPage from "../../../../../components/TripMapPage.astro";
+
+export const prerender = false;
+---
+
+<TripMapPage
+  title="John Muir Trail (2020) | Nathan Houle"
+  map={{
+    initialViewState: {
+      latitude: 37.225265,
+      longitude: -118.895305,
+      zoom: 9,
+    },
+    maxBounds: [
+      // SW
+      -136.09690763237217, 22.029278549400683,
+      // NE
+      -98.05219538673303, 54.04133322042521,
+    ],
+  }}
+  photoAlbumId="98c6d823-0f56-498f-9ca3-7a31b81c10e6"
+  tripId="john-muir-trail"
+/>

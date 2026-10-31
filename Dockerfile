@@ -1,16 +1,19 @@
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
+
+ENV ASTRO_TELEMETRY_DISABLED=1
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+RUN corepack enable
+WORKDIR /app
 
 #
 # Dependencies builder
 #
 
 FROM base AS deps-builder
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-RUN yarn --immutable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
 #
 # App builder
@@ -18,37 +21,49 @@ RUN yarn --immutable
 
 FROM base AS app-builder
 
-ARG NEXT_PUBLIC_MAPTILER_API_KEY
+ARG PUBLIC_MAPTILER_API_KEY
+ENV PUBLIC_MAPTILER_API_KEY=$PUBLIC_MAPTILER_API_KEY
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NEXT_PUBLIC_MAPTILER_API_KEY=$NEXT_PUBLIC_MAPTILER_API_KEY
-
-WORKDIR /app
 COPY --from=deps-builder /app/node_modules ./node_modules
 COPY . .
-RUN yarn build
+RUN pnpm run build
+
+#
+# Runtime base (node:24-alpine with development-time deps trimmed out to reduce image size)
+#
+
+FROM node:24-alpine AS runtime-base
+
+RUN rm -rf \
+  /opt/yarn-* \
+  /usr/local/bin/corepack \
+  /usr/local/bin/npm \
+  /usr/local/bin/npx \
+  /usr/local/bin/yarn \
+  /usr/local/bin/yarnpkg \
+  /usr/local/include/node \
+  /usr/local/lib/node_modules
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 --ingroup nodejs nodejs
 
 #
 # App runner
 #
 
-FROM base AS app
+FROM scratch AS app
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
+COPY --from=runtime-base / /
 
 WORKDIR /app
-RUN adduser --system --uid 1001 nextjs
-RUN addgroup --system --gid 1001 nodejs
 
-COPY --from=app-builder --chown=nextjs:nodejs /app/public ./public
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=app-builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=app-builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV NODE_ENV=production
+ENV HOST=127.0.0.1
+ENV PORT=3000
 
-USER nextjs
-ENV PORT 3000
+COPY --from=app-builder --chown=astro:nodejs /app/dist ./dist
+
+USER 1001
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "dist/server/entry.mjs"]

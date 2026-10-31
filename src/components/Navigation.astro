@@ -1,0 +1,55 @@
+---
+import * as flexboxStyles from "./Flexbox.css";
+import * as styles from "./Navigation.css";
+
+const pathname =
+  Astro.url.pathname.length > 1
+    ? Astro.url.pathname.replace(/\/$/u, "")
+    : Astro.url.pathname;
+
+const internalLinks = [
+  { href: "/", label: "Home" },
+  { href: "/hiking", label: "Hiking" },
+];
+
+const externalLinks = [
+  { href: "https://www.linkedin.com/in/ndhoule", label: "LinkedIn" },
+  { href: "https://github.com/ndhoule", label: "GitHub" },
+  { href: "mailto:nathan@nathanhoule.com", label: "Email" },
+];
+---
+
+<nav>
+  <div class:list={[flexboxStyles.flexRow, styles.navigation]}>
+    <ul class={styles.navigationSection}>
+      {internalLinks.map(({ href, label }) => (
+        <li class={styles.navigationElement}>
+          <a aria-current={pathname === href ? "page" : undefined} href={href}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <ul class={styles.navigationSection}>
+      {externalLinks.map(({ href, label }) => (
+        <li class={styles.navigationElement}>
+          <a href={href} rel="noopener noreferrer" target="_blank">
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // Without client-side routing, following a link to the current page would reload it
+  for (const link of document.querySelectorAll<HTMLAnchorElement>(
+    'nav a[aria-current="page"]',
+  )) {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+    });
+  }
+</script>

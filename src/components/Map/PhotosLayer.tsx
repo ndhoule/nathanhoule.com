@@ -1,7 +1,13 @@
+import type GeoJSON from "geojson";
 import React from "react";
-import { Layer as MGLLayer, Source as MGLSource } from "react-map-gl";
+import { Layer as MGLLayer, Source as MGLSource } from "@vis.gl/react-maplibre";
 import { usePhotos } from "../../queries/photos";
 import { useControlPanel } from "./ControlPanel";
+
+const createDefaultPhotoData = (): GeoJSON.FeatureCollection => ({
+  features: [],
+  type: "FeatureCollection",
+});
 
 export type PhotosLayer = React.ComponentProps<typeof PhotosLayer>;
 
@@ -13,26 +19,24 @@ export const PhotosLayer = ({ id }: { id: string }) => {
       select: ({ assets }) =>
         ({
           type: "FeatureCollection",
-          features: assets.map(({ id, exifInfo, fullUrl, thumbnailUrl }) => {
-            return {
-              type: "Feature" as const,
+          features: assets.map(({ id, exifInfo, fullUrl, thumbnailUrl }) => ({
+            type: "Feature" as const,
+            id,
+            geometry: {
+              type: "Point" as const,
+              coordinates: [exifInfo.longitude, exifInfo.latitude],
+            },
+            properties: {
               id,
-              geometry: {
-                type: "Point" as const,
-                coordinates: [exifInfo.longitude, exifInfo.latitude],
-              },
-              properties: {
-                id,
-                description: exifInfo.description,
-                fullUrl,
-                imageHeight: exifInfo.imageHeight,
-                imageWidth: exifInfo.imageWidth,
-                latitude: exifInfo.latitude,
-                longitude: exifInfo.longitude,
-                thumbnailUrl,
-              },
-            };
-          }),
+              description: exifInfo.description,
+              fullUrl,
+              imageHeight: exifInfo.imageHeight,
+              imageWidth: exifInfo.imageWidth,
+              latitude: exifInfo.latitude,
+              longitude: exifInfo.longitude,
+              thumbnailUrl,
+            },
+          })),
         }) as const,
     },
   );
@@ -46,7 +50,7 @@ export const PhotosLayer = ({ id }: { id: string }) => {
       cluster
       clusterMaxZoom={12}
       clusterRadius={50}
-      data={data}
+      data={data ?? createDefaultPhotoData()}
       type="geojson"
     >
       <MGLLayer
@@ -83,7 +87,7 @@ export const PhotosLayer = ({ id }: { id: string }) => {
         type="symbol"
         layout={{
           "text-field": "{point_count_abbreviated}",
-          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-font": ["Noto Sans Bold"],
           "text-size": 12,
           visibility: showPhotos ? "visible" : "none",
         }}

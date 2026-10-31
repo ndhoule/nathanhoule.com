@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import "maplibre-gl/dist/maplibre-gl.css";
+import "../styles/maplibre-gl-overrides.css";
+
+import { prefetchMapData } from "../server/prefetch";
+import { TripMap, type TripMapProps } from "./Map/TripMap";
+
+type Props = Omit<TripMapProps, "dehydratedState"> & { title: string };
+
+const { title, ...props } = Astro.props;
+
+const dehydratedState = await prefetchMapData({
+  photoAlbumId: props.photoAlbumId,
+  tripId: props.tripId,
+});
+---
+
+<BaseLayout title={title} robots="noindex, nofollow">
+  <TripMap
+    client:only="react"
+    {...props}
+    dehydratedState={JSON.stringify(dehydratedState)}
+  />
+</BaseLayout>

@@ -1,5 +1,5 @@
 import type GeoJSON from "geojson";
-import { Layer as MGLLayer, Source as MGLSource } from "react-map-gl";
+import { Layer as MGLLayer, Source as MGLSource } from "@vis.gl/react-maplibre";
 import { useRouteById } from "../../queries/route_by_id";
 import { useControlPanel } from "./ControlPanel";
 

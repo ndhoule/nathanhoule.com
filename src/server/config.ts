@@ -1,17 +1,13 @@
-import moize from "moize";
+import { getSecret } from "astro:env/server";
 import { z } from "zod";
 
 const ConfigSchema = z.object({
-  garmin: z.object({
-    mapShareMapId: z.string().min(1),
-    mapSharePassword: z.string().min(1),
-  }),
   immich: z.object({
     addr: z.string().min(1),
     albumIdWhitelist: z
       .string()
       .transform((value) => value.split(","))
-      .pipe(z.array(z.string().uuid()))
+      .pipe(z.array(z.uuid()))
       .transform((values) => new Set(values)),
     apiKey: z.string().min(1),
   }),
@@ -19,16 +15,15 @@ const ConfigSchema = z.object({
 
 export type Config = z.output<typeof ConfigSchema>;
 
-export const getConfig = moize((): Config => {
-  return ConfigSchema.parse({
-    garmin: {
-      mapShareMapId: process.env["GARMIN_MAPSHARE_MAP_ID"],
-      mapSharePassword: process.env["GARMIN_MAPSHARE_PASSWORD"],
-    },
+let config: Config | undefined;
+
+export const getConfig = (): Config => {
+  config ??= ConfigSchema.parse({
     immich: {
-      addr: process.env["IMMICH_ADDR"],
-      albumIdWhitelist: process.env["IMMICH_ALBUM_ID_WHITELIST"],
-      apiKey: process.env["IMMICH_API_KEY"],
+      addr: getSecret("IMMICH_ADDR"),
+      albumIdWhitelist: getSecret("IMMICH_ALBUM_ID_WHITELIST"),
+      apiKey: getSecret("IMMICH_API_KEY"),
     },
   });
-});
+  return config;
+};
