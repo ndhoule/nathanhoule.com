@@ -29,39 +29,26 @@ COPY . .
 RUN pnpm run build
 
 #
-# Runtime base (node:24-alpine with development-time deps trimmed out to reduce image size)
+# App runner
+#
+# Uses Alpine's nodejs package rather than node:24-alpine: it links against system libraries and
+# ships English-only ICU data, which roughly halves the image size. Alpine's nodejs package tracks
+# the current Node LTS, so moving to a newer Alpine release can change the Node major version.
 #
 
-FROM node:24-alpine AS runtime-base
+FROM alpine:3.24 AS app
 
-RUN rm -rf \
-  /opt/yarn-* \
-  /usr/local/bin/corepack \
-  /usr/local/bin/npm \
-  /usr/local/bin/npx \
-  /usr/local/bin/yarn \
-  /usr/local/bin/yarnpkg \
-  /usr/local/include/node \
-  /usr/local/lib/node_modules
+RUN apk add --no-cache nodejs
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 --ingroup nodejs nodejs
 
-#
-# App runner
-#
-
-FROM scratch AS app
-
-COPY --from=runtime-base / /
-
 WORKDIR /app
 
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV NODE_ENV=production
 ENV HOST=127.0.0.1
 ENV PORT=3000
 
-COPY --from=app-builder --chown=astro:nodejs /app/dist ./dist
+COPY --from=app-builder --chown=nodejs:nodejs /app/dist ./dist
 
 USER 1001
 EXPOSE 3000
