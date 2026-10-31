@@ -19,7 +19,7 @@ jobs:
       - run: yarn run typecheck
   build-and-push-container-image:
     name: Build and push container image
-    if: gitea.ref == 'refs/heads/main'
+    if: forgejo.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -38,16 +38,16 @@ jobs:
           push: true
           tags: |
             ndhoule/nathanhoule.com:latest
-            ndhoule/nathanhoule.com:${{ gitea.sha }}
+            ndhoule/nathanhoule.com:${{ forgejo.sha }}
   deploy:
     name: Deploy
-    if: gitea.ref == 'refs/heads/main'
+    if: forgejo.ref == 'refs/heads/main'
     needs: build-and-push-container-image
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Configure Nomad
-        uses: nferch/setup-nomad@v4.0.0
+        uses: https://github.com/nferch/setup-nomad@v4.0.0
       - name: Deploy to Nomad
-        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" NOMAD_TOKEN="${{ secrets.NOMAD_TOKEN }}" IMAGE_TAG="${{ gitea.sha }}" scripts/deploy
+        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" NOMAD_TOKEN="${{ secrets.NOMAD_TOKEN }}" IMAGE_TAG="${{ forgejo.sha }}" scripts/deploy
