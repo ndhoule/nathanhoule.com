@@ -4,7 +4,7 @@
 
 variable "image" {
   type    = string
-  default = "docker.io/ndhoule/nathanhoule.com"
+  default = "source.nathanhoule.net/ndhoule/personal-website"
 }
 
 variable "image_tag" {

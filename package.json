@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "astro build",
-    "build-docker": "docker build -t ndhoule/nathanhoule.com:latest .",
+    "build-docker": "docker build -t ndhoule/personal-website:latest .",
     "check": "astro sync && vp check && astro check",
     "check:fix": "astro sync && vp check --fix",
     "clean": "rm -rf .astro/ *.tsbuildinfo",

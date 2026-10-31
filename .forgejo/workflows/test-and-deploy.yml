@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  IMAGE: source.nathanhoule.net/ndhoule/personal-website
+  REGISTRY: source.nathanhoule.net
+
 jobs:
   test:
     name: Run tests
@@ -27,11 +31,13 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Log in to Docker Hub
+      - name: Log in to Forgejo container registry
         uses: docker/login-action@v3
         with:
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          registry: ${{ env.REGISTRY }}
+          # The automatic Actions token can't write packages, so this is a PAT with write:package
+          password: ${{ secrets.REGISTRY_TOKEN }}
+          username: ${{ forgejo.repository_owner }}
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
@@ -39,8 +45,8 @@ jobs:
             PUBLIC_MAPTILER_API_KEY=${{ secrets.PUBLIC_MAPTILER_API_KEY }}
           push: true
           tags: |
-            ndhoule/nathanhoule.com:latest
-            ndhoule/nathanhoule.com:${{ forgejo.sha }}
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ forgejo.sha }}
   deploy:
     name: Deploy
     if: forgejo.ref == 'refs/heads/main'
@@ -52,4 +58,4 @@ jobs:
       - name: Configure Nomad
         uses: https://github.com/nferch/setup-nomad@v4.0.0
       - name: Deploy to Nomad
-        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" NOMAD_TOKEN="${{ secrets.NOMAD_TOKEN }}" IMAGE_TAG="${{ forgejo.sha }}" scripts/deploy
+        run: NOMAD_SKIP_VERIFY=1 NOMAD_ADDR="https://nomad.nathanhoule.net" NOMAD_TOKEN="${{ secrets.NOMAD_TOKEN }}" IMAGE="${{ env.IMAGE }}" IMAGE_TAG="${{ forgejo.sha }}" scripts/deploy
